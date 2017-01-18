@@ -13,42 +13,27 @@ router.get('/doctor_home', function(req, res, next) {
   res.render('doctor_home');
 });
 
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-  	console.log(username);
-   Doctor.getDoctorByUsername(username, function(err, user){
-   	console.log(user);
-   	if(err) throw err;
-   	if(!user){
-   		return done(null, false, {message: 'Unknown User'});
-   	}
-   	console.log(user);
-   	Doctor.comparePassword(password, user.password, function(err, isMatch){
-   		if(err) throw err;
-   		if(isMatch){
-   			return done(null, user);
-   		} else {
-   			return done(null, false, {message: 'Invalid password'});
-   		}
-   	});
-   });
-  }));
-
-
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
+router.post('/login',function(req,res){
+  Doctor.getDoctorByUsername(req.body.username,function(err,user){
+    if(!user){
+      console.log("invalid username")
+      res.redirect('/doctor/login');
+    } 
+    else{
+        Doctor.comparePassword(req.body.password, user.password, function(err, isMatch){
+      
+       // if(err) throw err;
+        if(isMatch){
+          res.redirect('/doctor/doctor_home');
+        
+      } else {
+        console.log('Invalid password');
+      }
+        
+      }
+  )}
+})
 });
-
-passport.deserializeUser(function(id, done) {
-  Doctor.getUserById(id, function(err, user) {
-    done(err, user);
-  });
-});
-
-router.post('/login',
-  passport.authenticate('local', {successRedirect:'/doctor/doctor_home', failureRedirect:'/doctor/login',failureFlash: true}),
-  function(req, res) {
-    res.redirect('/');
-  });
+   
 
 module.exports = router;

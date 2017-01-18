@@ -33,7 +33,7 @@ module.exports.createPatient = function(newPatient, callback){
 }
 
 module.exports.getPatientByUsername = function(username, callback){
-	console.log(username);
+	//console.log(username);
 	var query = {username: username};
 	patient.findOne(query, callback);
 	
