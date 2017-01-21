@@ -5,12 +5,22 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var Patient = require('../models/patients');
 
+
 /* GET users listing. */
 router.get('/login', function(req, res, next) {
+  if(req.session.user)
+  {
+    
+    res.redirect('/patient/patient_home');}
+  else
   res.render('patient_login');
 });
 router.get('/patient_home', function(req, res, next) {
-  res.render('patient_home');
+  if(req.session.user)
+  res.render('patient_home',{
+    users:'1'
+  });
+  else res.redirect('/patient/login');
 });
 
 
@@ -26,6 +36,10 @@ router.post('/login',function(req,res){
       
        // if(err) throw err;
         if(isMatch){
+          delete user.password;
+          req.session.users=null;
+          req.session.user = user;
+          
           res.redirect('/patient/patient_home');
         
       } else {
