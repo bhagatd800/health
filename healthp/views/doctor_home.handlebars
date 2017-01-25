@@ -1,15 +1,15 @@
-<div class="row">
-    <div class="col-lg-12">
+<div class="row" ng-app="myapp">
+    <div class="col-lg-12" ng-controller="tabController">
 		
 			</br>
 
-			<ul class="nav nav-tabs nav-justified">
+			<ul class="nav nav-tabs nav-justified" >
 			<li class="active">
 
 			<a data-toggle="tab" href="#home">Home</a>
 			<li><a data-toggle="tab" href="#update_disease">Update_disease</a></li>
 			<li><a data-toggle="tab" href="#search">Search</a></li>
-			<li><a data-toggle="tab" href="#update">Update_Profile</a></li>
+			<li><a data-toggle="tab" href="#update" ng-click="getDocData()">Update_Profile</a></li>
 			</ul>
 			<div class="tab-content">
 			<div id="home" class="tab-pane fade in active">
@@ -26,9 +26,92 @@
 			  <h3>Menu 2</h3>
 			  <p>SEARCH BOX</p>
 			</div>
+			
+
+
+
 			<div id="update" class="tab-pane fade">
-			  <h3>Menu 3</h3>
-			  <p>UPDATE PROFILE</p>
+			  <div class="row">
+			    <div class="col-lg-12">
+			        <center>
+
+			        <h2 class="page-header">Update Profile</h2>
+
+					<form method="post" action="/register/register">
+			   		<table style="width:40%">
+			   	
+				   		<tr>
+				   	
+					   		<td><label><div class="form-group">Name</div></label></td>
+					    	<td><div class="form-group"><input type="text" class="form-control"  name="name" placeholder="Name" ng-model="data.name"></div></td>
+				    
+				   		 </tr>
+				  	
+				  		<tr>
+			  	
+					    	<td>
+					    	<label><div class="form-group">Username</div></label>
+					    	</td>
+					    	<td><div class="form-group"><input type="text" class="form-control" placeholder="Username" ng-model="data.username" name="username"></div></td>
+					  	
+			  			</tr>
+			  			<tr>
+				
+						    <td><label><div class="form-group">Email</label></div></td>
+						    <td><div class="form-group"><input type="email" class="form-control" placeholder="Email" ng-model="data.email" name="email"></div><td>
+						  	
+					  	</tr>
+
+					  	<tr>
+					  	<td><label>Gender</label></td>
+					  	<td>
+					  		<div class="form-group" style="width:160%">
+					  		<select class="selectpicker" name="user_gender" >
+				  			<option value="Male">Male</option>
+				  			<option value="Female">Female</option>
+				  			</select>
+				  			</div>	  			
+						</td>
+			  			<tr>
+
+			 	
+						    <td><div class="form-group"><label>Specialty</label></div></td>
+						    <td><div class="form-group"><input type="text" class="form-control" placeholder="Specialty" name="specialty"></div></td>
+					  	
+			  	
+			  			</tr>
+			  			<tr>
+
+			  	
+						    <td><div class="form-group"><label>Location</label></div></td>
+						    <td><div class="form-group"><input type="text" class="form-control" placeholder="Location" name="location"></div></td>
+						  	</div>
+			  			</tr>
+			  			<tr>
+
+			  	
+						    <td><div class="form-group"><label>Nationality</label></div></td>
+						    <td><div class="form-group"><input type="text" class="form-control" placeholder="Nationality" name="nationality"></div></td>
+						  	</div>
+			  			</tr>
+			  			<tr>
+
+			  	
+						    <td><div class="form-group"><label>Qualification</label></div></td>
+						    <td><div class="form-group"><textarea class="form-control" rows="5" name="qualification"></textarea></div></td>
+						  	</div>
+			  			</tr>
+			  			</table>
+						  <button type="submit" class="btn btn-default">Submit</button>
+						  	
+						
+
+						
+					
+				</form>
+			    </center>
+			   </div>
+</div>
 			</div>
 		
  	</div>

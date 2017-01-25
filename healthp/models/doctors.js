@@ -33,7 +33,7 @@ module.exports.createDoctor = function(newDoctor, callback){
 }
 
 module.exports.getDoctorByUsername = function(username, callback){
-	console.log(username);
+	//console.log(username);
 	var query = {username: username};
 	doctor.findOne(query, callback);
 	
@@ -47,4 +47,8 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     	if(err) throw err;
     	callback(null, isMatch);
 	});
+}
+module.exports.getDocData=function(user_id,callback){
+	var query={_id:user_id};
+	doctor.findOne(query,callback);
 }

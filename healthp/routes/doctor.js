@@ -49,6 +49,24 @@ router.post('/login',function(req,res){
   )}
 })
 });
+
+router.get('/getDocData' ,function(req,res){
+  Doctor.getDocData(req.session.users._id,function(err,user){
+    if(!user){
+      console.log('error');
+    }
+    else
+    {
+      delete user.password;
+      console.log(user);
+      res.json(user);
+
+    }
+  })
+ 
+
+
+});
    
 
 module.exports = router;
