@@ -69,5 +69,10 @@ router.post('/register', function(req, res){
 	}
 });
 
-
+router.get('/logout', function(req, res,next) {
+	req.session.patient=null;
+	req.session.doctor=null;
+	req.session.admin=null;
+  res.render('index');
+});
 module.exports = router;

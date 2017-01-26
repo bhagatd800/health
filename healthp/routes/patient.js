@@ -1,14 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+
 
 var Patient = require('../models/patients');
 
 
 /* GET users listing. */
 router.get('/login', function(req, res, next) {
-  if(req.session.user)
+  if(req.session.patient)
   {
     
     res.redirect('/patient/patient_home');}
@@ -16,7 +15,7 @@ router.get('/login', function(req, res, next) {
   res.render('patient_login');
 });
 router.get('/patient_home', function(req, res, next) {
-  if(req.session.user)
+  if(req.session.patient)
   res.render('patient_home',{
     users:'1'
   });
@@ -37,8 +36,9 @@ router.post('/login',function(req,res){
        // if(err) throw err;
         if(isMatch){
           delete user.password;
-          req.session.users=null;
-          req.session.user = user;
+          req.session.doctor=null;
+          req.session.admin=null;
+          req.session.patient = user;
           
           res.redirect('/patient/patient_home');
         
@@ -51,6 +51,20 @@ router.post('/login',function(req,res){
 })
 });
 
+router.post('/update_password',function(req,res){
+
+  Patient.updatePassword(req.session.patient._id,req.body.password1,function(err,user){
+    if(!user){
+      console.log('error');
+    }
+    else{
+      res.redirect('/doctor/login');
+    }
+
+  })
+
+
+});
 
 
 module.exports = router;
