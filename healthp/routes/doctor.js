@@ -68,7 +68,7 @@ router.get('/getDocData' ,function(req,res){
 
 });
 router.post('/update_profile',function(req,res){
-  Doctor.updateProfile(req.session.users._id,req.body, function(err,user){
+  Doctor.updateProfile(req.session.doctor._id,req.body, function(err,user){
     if(!user){
       console.log('error');
     }
@@ -81,7 +81,7 @@ router.post('/update_profile',function(req,res){
 });
 
 router.post('/update_password',function(req,res){
-  Doctor.updatePassword(req.session.users._id,req.body.password1,function(err,user){
+  Doctor.updatePassword(req.session.doctor._id,req.body.password1,function(err,user){
     if(!user){
       console.log('error');
     }
