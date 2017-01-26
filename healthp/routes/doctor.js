@@ -58,12 +58,38 @@ router.get('/getDocData' ,function(req,res){
     else
     {
       delete user.password;
-      console.log(user);
+      
       res.json(user);
 
     }
   })
  
+
+
+});
+router.post('/update_profile',function(req,res){
+  Doctor.updateProfile(req.session.users._id,req.body, function(err,user){
+    if(!user){
+      console.log('error');
+    }
+    else{
+      //
+    }
+
+  })
+  
+});
+
+router.post('/update_password',function(req,res){
+  Doctor.updatePassword(req.session.users._id,req.body.password1,function(err,user){
+    if(!user){
+      console.log('error');
+    }
+    else{
+      res.redirect('/doctor/login');
+    }
+
+  })
 
 
 });

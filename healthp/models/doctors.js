@@ -18,7 +18,23 @@ var DoctorSchema = mongoose.Schema({
 	},
 	user_type:{
 		type:String
+	},
+	gender:{
+		type:String
+	},
+	location:{
+		type:String
+	},
+	specialty:{
+		type:String
+	},
+	qualification:{
+		type:String
+	},
+	nationality:{
+		type:String
 	}
+
 });
 
 var doctor = module.exports = mongoose.model('doctor', DoctorSchema);
@@ -51,4 +67,18 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
 module.exports.getDocData=function(user_id,callback){
 	var query={_id:user_id};
 	doctor.findOne(query,callback);
+}
+
+module.exports.updatePassword=function(user_id,password,callback){
+
+	bcrypt.genSalt(10, function(err, salt) {
+	    bcrypt.hash(password, salt, function(err, hash) {
+	        password = hash;
+	        doctor.update({ _id: user_id }, { $set: { password: password }}, callback);
+	    });
+	});
+	
+}
+module.exports.updateProfile=function(user_id,profile,callback){
+	doctor.update({ _id: user_id }, profile, callback);	
 }
