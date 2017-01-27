@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var session = require('express-session');
 var Admin = require('../models/admin');
+var Patient = require('../models/patients');
+var Doctor = require('../models/doctors');
 
 router.get('/admin_home', function(req, res, next) {
   if(req.session.admin)
@@ -39,6 +41,41 @@ router.post('/login',function(req,res){
 })
 });
 
+router.get('/getDocData' ,function(req,res){
+ 
+res.json({"name":"deepak kumar"});
+  // Doctor.getEntireData(function(err,user){
+  //   if(!user){
+  //     console.log('error');
+  //   }
+  //   else
+  //   {
+  //     delete user.password;
+      
+  //     res.json(user);
+
+  //   }
+  // })
+
+});
+
+router.get('/getPatientsData' ,function(req,res){
+  res.json({"name":"deepak"});
+
+  // Patient.getEntireData(function(err,user){
+  //   if(!user){
+  //     console.log('error');
+  //   }
+  //   else
+  //   {
+  //     delete user.password;
+      
+  //     res.json(user);
+
+  //   }
+  // })
+
+});
 
 
 
