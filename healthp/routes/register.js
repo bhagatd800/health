@@ -3,8 +3,8 @@ var router = express.Router();
 var Doctor = require('../models/doctors');
 var Patient =require('../models/patients');
 
-router.get('/register', function(req, res,next) {
-  res.render('register', { title: 'Express' });
+router.get('/register', function(req, res) {
+  res.render('register');
 });
 
 router.post('/register', function(req, res){

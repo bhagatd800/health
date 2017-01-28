@@ -19,12 +19,75 @@
 				</div>
 				
 				<div id="manage_doctor" class="tab-pane fade">
-				  <h3>Menu 2</h3>
-				  <p>Doctor Management</p>
+				<div class="row">
+			    <div class="col-lg-12">
+			        <center>
+
+			        <h2 class="page-header" style="color:red">Manage Doctor</h2>
+				  <table class="table table-striped">
+					  <thead class="thead-inverse">
+					    <tr>
+					      <th>Name</th>
+					      <th>Username</th>
+					      <th>Email</th>
+					      <th>Location</th>
+					      <th>Nationality</th>
+					      <th>Specialty</th>
+					      <th>Qualification</th>
+					      <th>Action</th>
+
+					    </tr>
+					  </thead>
+					<tbody>
+				      <tr ng-repeat="data in doctorData">
+				        <td>{[{data.name}]}</td>
+				        <td>{[{data.username}]}</td>
+				        <td>{[{data.email}]}</td>
+				        <td>{[{data.location}]}</td>
+				        <td>{[{data.nationality}]}</td>
+				        <td>{[{data.specialty}]}</td>
+				        <td>{[{data.qualification}]}</td>
+				        <td><button type="button" class="btn btn-danger" ng-click="deleteDoctor(data)">DELETE</button></td>
+				      </tr>
+				      
+				    </tbody>
+				  </table>
+				</center>
 				</div>
+				</div>
+
+				</div>
+				
 				<div id="manage_patient" class="tab-pane fade">
-				  <h3>Menu 3</h3>
-				  <p>Patient Management</p>
+				  <div class="row">
+			    <div class="col-lg-12">
+			        <center>
+
+			        <h2 class="page-header" style="color:red">Manage Patient</h2>
+				  <table class="table table-striped">
+					  <thead class="thead-inverse">
+					    <tr>
+					      <th>Name</th>
+					      <th>Username</th>
+					      <th>Email</th>
+					      <th>Action</th>
+
+					    </tr>
+					  </thead>
+					<tbody>
+				      <tr ng-repeat="data in patientData">
+				        <td>{[{data.name}]}</td>
+				        <td>{[{data.username}]}</td>
+				        <td>{[{data.email}]}</td>
+				        <td><button type="button" class="btn btn-danger" ng-click="deletePatient(data)">DELETE</button></td>
+				      </tr>
+				      
+				    </tbody>
+				  </table>
+				</center>
+				</div>
+				</div>
+
 				</div>
 			</div>
  	</div>

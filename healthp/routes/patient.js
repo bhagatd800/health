@@ -6,7 +6,7 @@ var Patient = require('../models/patients');
 
 
 /* GET users listing. */
-router.get('/login', function(req, res, next) {
+router.get('/login', function(req, res) {
   if(req.session.patient)
   {
     
@@ -14,7 +14,7 @@ router.get('/login', function(req, res, next) {
   else
   res.render('patient_login');
 });
-router.get('/patient_home', function(req, res, next) {
+router.get('/patient_home', function(req, res) {
   if(req.session.patient)
   res.render('patient_home',{
     users:'1'

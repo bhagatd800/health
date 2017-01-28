@@ -82,3 +82,13 @@ module.exports.updatePassword=function(user_id,password,callback){
 module.exports.updateProfile=function(user_id,profile,callback){
 	doctor.update({ _id: user_id }, profile, callback);	
 }
+
+module.exports.getEntireData=function(callback){
+	
+	doctor.find(callback);
+}
+
+module.exports.delete=function(doc_id,callback){
+	doctor.remove({ _id: doc_id }, callback);	
+	
+}
