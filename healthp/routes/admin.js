@@ -13,7 +13,10 @@ router.get('/admin_home', function(req,res) {
   else res.redirect('/admin');
 });
 
-
+router.get('/register', function(req,res) {
+  
+ res.render('admin_register');
+});
 router.post('/login',function(req,res){
 	Admin.getAdminByUsername(req.body.username,function(err,user){
     if(!user){
@@ -109,11 +112,29 @@ router.post('/update_password',function(req,res){
       console.log('error');
     }
     else{
-      res.redirect('/doctor/login');
+      //res.redirect('/doctor/login');
     }
 
   })
 
+
+});
+
+router.post('/register',function(req, res){
+  var newAdmin = new Admin({
+      username: req.body.username,
+      password: req.body.password
+      
+    });
+Admin.createAdmin(newAdmin, function(err, user){
+  if(!user){
+      console.log('error');
+    }
+    else{
+      res.redirect('/admin');
+    }
+
+  });
 
 });
 

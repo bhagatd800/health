@@ -15,6 +15,15 @@ var AdminSchema = mongoose.Schema({
 
 var admin = module.exports = mongoose.model('admin', AdminSchema);
 
+module.exports.createAdmin = function(newAdmin, callback){
+	bcrypt.genSalt(10, function(err, salt) {
+	    bcrypt.hash(newAdmin.password, salt, function(err, hash) {
+	        newAdmin.password = hash;
+	        newAdmin.save(callback);
+	    });
+	});
+}
+
 module.exports.getAdminByUsername = function(username, callback){
 	//console.log(username);
 	var query = {username: username};
