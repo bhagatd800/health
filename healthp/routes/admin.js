@@ -101,6 +101,20 @@ router.post('/delete_patient',function(req,res){
     }
 
   });
-})
+});
+
+router.post('/update_password',function(req,res){
+  Admin.updatePassword(req.session.admin._id,req.body.password1,function(err,user){
+    if(!user){
+      console.log('error');
+    }
+    else{
+      res.redirect('/doctor/login');
+    }
+
+  })
+
+
+});
 
 module.exports = router;

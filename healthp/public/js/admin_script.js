@@ -3,7 +3,7 @@ app.config(function($interpolateProvider) {
   $interpolateProvider.startSymbol('{[{');
   $interpolateProvider.endSymbol('}]}');
 });
-app.controller("adminController", ['$scope','getPatientDatas','deleteDoc','getDoctorDatas','deletePatients', function($scope,getPatientDatas,deleteDoc,getDoctorDatas,deletePatients)  {
+app.controller("adminController", ['$scope','getPatientDatas','deleteDoc','getDoctorDatas','deletePatients','changePassword', function($scope,getPatientDatas,deleteDoc,getDoctorDatas,deletePatients,changePassword)  {
 
 
 $scope.getPatientData=function(){
@@ -38,7 +38,24 @@ $scope.getDoctorData= function(){
   $scope.patientData=data;
   
 });
- }
+}
+$scope.password={
+  'password1':'',
+  'password2':''
+};
+$scope.change_password=function(){
+   if($scope.password.password1==$scope.password.password2)
+
+  {
+      //alert($scope.password.password1);
+      changePassword.updatePassword($scope.password)
+  }
+  else
+  {
+    alert("Password Doesnot Match");
+  }
+
+}
 
 
 
@@ -127,5 +144,29 @@ return{
 
 
 }
+
+}]);
+app.service("changePassword",['$http',function($http){
+
+return{
+  updatePassword:function(password){
+  $http({
+    url: '/admin/update_password',
+    method: "POST",
+    data: password,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+}).then(function(password){ //.success is deprecated,so use .then
+    alert("Updated Successfully");
+})
+  .catch(function(err){//using .catch instead of .error as it is deprecated
+    console.log("Error in request =>", err)
+});
+
+  }
+
+}
+
 
 }]);

@@ -29,3 +29,14 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     	callback(null, isMatch);
 	});
 }
+
+module.exports.updatePassword=function(user_id,password,callback){
+
+	bcrypt.genSalt(10, function(err, salt) {
+	    bcrypt.hash(password, salt, function(err, hash) {
+	        password = hash;
+	        admin.update({ _id: user_id }, { $set: { password: password }}, callback);
+	    });
+	});
+	
+}
