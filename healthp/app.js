@@ -13,8 +13,8 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/healthcare');
-var db = mongoose.connection;
+//mongoose.connect('mongodb://localhost/healthcare');
+//var db = mongoose.connection;
 
 // setting the routes that are required
 var index = require('./routes/index');
