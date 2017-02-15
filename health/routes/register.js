@@ -55,7 +55,8 @@ router.post('/register', function(req, res){
 			email:email,
 			username: username,
 			password: password,
-			user_type:user_type
+			user_type:user_type,
+			status:0
 		});
 
 		Doctor.createDoctor(newDoctor, function(err, user){

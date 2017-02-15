@@ -4,7 +4,7 @@ app.config(function($interpolateProvider) {
   $interpolateProvider.endSymbol('}]}');
 });
 
-app.controller("patientController", ['$scope','changePassword','postSymptom','getResult', function($scope,changePassword,postSymptom,getResult)  {
+app.controller("patientController", ['$scope','changePassword','postSymptom','getResult','getDoctorDatas', function($scope,changePassword,postSymptom,getResult,getDoctorDatas)  {
 
 $scope.password={
   'password1':'',
@@ -17,6 +17,14 @@ $scope.symptom={
   'sym4':'',
   'sym5':''
 };
+
+$scope.getDoctorData= function(){
+
+ getDoctorDatas.docData().then(function(data){
+  $scope.doctorData=data;
+  //alert($scope.doctorData[0].name);
+});
+}
 
 $scope.search=function(){
   if(($scope.symptom.sym1==$scope.symptom.sym2)||($scope.symptom.sym1==$scope.symptom.sym3)||($scope.symptom.sym1==$scope.symptom.sym4)||($scope.symptom.sym1==$scope.symptom.sym5)||($scope.symptom.sym2==$scope.symptom.sym3)||($scope.symptom.sym2==$scope.symptom.sym4)||($scope.symptom.sym2==$scope.symptom.sym5)||($scope.symptom.sym3==$scope.symptom.sym4)||($scope.symptom.sym3==$scope.symptom.sym5)||($scope.symptom.sym4==$scope.symptom.sym5)){
@@ -119,4 +127,26 @@ app.factory("getResult",['$http',function($http){
    }  
     
 }
+}]);
+app.factory("getDoctorDatas",['$http',function($http){
+
+return{
+
+   docData:function(){
+     docDatas=$http({
+      method: 'GET',
+       url: '/admin/getDocData'
+   }).then(function(response) {
+      
+       return response.data;
+      
+     })
+      
+     return docDatas;
+
+    }
+
+
+}
+
 }]);
