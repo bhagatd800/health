@@ -7,22 +7,52 @@
 			<ul class="nav nav-tabs nav-justified" >
 			<li class="active">
 
-			<a data-toggle="tab" href="#home">Home</a>
-			<li><a data-toggle="tab" href="#update_disease">Update_disease</a></li>
-			<li><a data-toggle="tab" href="#search">Search</a></li>
+			<a data-toggle="tab" href="#home" ng-init="getAppointment()">Home</a>
+			
+			<li><a data-toggle="tab" href="#search">Search Disease</a></li>
+			<li><a data-toggle="tab" href="#update_disease">Search Hospital</a></li>
 			<li><a data-toggle="tab" href="#update" ng-click="getDocData()">Update_Profile</a></li>
 			<li><a data-toggle="tab" href="#change_password">Change_Password</a></li>
 			</ul>
 			<div class="tab-content">
 			<div id="home" class="tab-pane fade in active">
-			  <div class="col-lg-10">
-			  <h3>HOME</h3>
-			  <p>WELCOME DOCTOR</p>
-			  </div>
+			  <center>
+
+			        <h2 class="page-header" style="color:red">New Appointment Request</h2>
+			       
+			     <div class="w3-card-12" style="width:60%;padding:20px;margin:30px">
+
+			       <div class="input-group" style="width:50%">
+			      <input type="text" class="form-control" placeholder="Search" ng-model="searchDoctor">
+			      <div class="input-group-btn">
+			        <button class="btn btn-default" disabled="disabled"><i class="glyphicon glyphicon-search"></i></button>
+			      </div>
+			    </div>
+			    </br>
+			    
+			     <table class="table table-striped">
+					  <thead class="thead-inverse">
+					    <tr>
+					      <th>Name</th>
+					  	 <th>Action</th>
+
+					    </tr>
+					  </thead>
+					<tbody>
+				      <tr ng-repeat="data in appointmentData |filter:searchDoctor">
+				        <td>{[{data.patientName}]}</td>
+				        <td><button type="button" class="btn btn-success" ng-click="approve(data)">Accept</button>
+				      <button type="button" class="btn btn-danger" ng-click="deleteNewDoctor(data)">Decline</button></td>
+				      </tr>
+				      
+				    </tbody>
+				  </table>
+				</center>
+				
 			</div>
 			<div id="update_disease" class="tab-pane fade">
 			  <h3>Menu 1</h3>
-			  <p>ADD NEW SYMPTOM AND DISEASE</p>
+			  <p>Search Hospital</p>
 			</div>
 			<div id="search" class="tab-pane fade">
 			  <div class="row">
@@ -657,9 +687,9 @@
 						<option> deafness</option>
 					</select>
 					<center>
-					<button type="button" class="btn btn-primary btn-lg"style="margin-bottom:20px" ng-click="search()">Search</button>
+					<button type="button" class="btn btn-primary btn-lg" ng-click="search()">Search</button>
 					</center>
-					{[{disease}]}
+					<h4 style="color:green;padding:30px">{[{disease}]}</h4>
 				 </div>   
 				
 			</div>

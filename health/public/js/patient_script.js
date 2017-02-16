@@ -4,7 +4,7 @@ app.config(function($interpolateProvider) {
   $interpolateProvider.endSymbol('}]}');
 });
 
-app.controller("patientController", ['$scope','changePassword','postSymptom','getResult','getDoctorDatas', function($scope,changePassword,postSymptom,getResult,getDoctorDatas)  {
+app.controller("patientController", ['$scope','changePassword','postSymptom','getResult','getDoctorDatas','reqAppointments', function($scope,changePassword,postSymptom,getResult,getDoctorDatas,reqAppointments)  {
 
 $scope.password={
   'password1':'',
@@ -59,8 +59,39 @@ $scope.change_password=function(){
   }
 }
 
+$scope.reqAppointment=function(data){
+
+reqAppointments.postData(data);
+}
+
 
 }]);
+
+app.service("reqAppointments",['$http',function($http){
+
+return{
+  postData:function(data){
+
+    //alert(password.password1);
+  datas=$http({
+    url: '/appointment/reqAppointment',
+    method: "POST",
+    data: data,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+}).then(function(datas){ //.success is deprecated,so use .then
+    alert("Request Send");
+})
+ 
+
+}
+}
+
+
+}]);
+
+
 
 
 app.service("changePassword",['$http',function($http){

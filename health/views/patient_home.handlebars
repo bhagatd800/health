@@ -653,9 +653,9 @@
 						<option> deafness</option>
 					</select>
 					<center>
-					<button type="button" class="btn btn-primary btn-lg"style="margin-bottom:20px" ng-click="search()">Search</button>
+					<button type="button" class="btn btn-primary btn-lg" ng-click="search()">Search</button>
 					</center>
-					{[{disease}]}
+					<h4 style="color:green;padding:30px">{[{disease}]}</h4>
 				 </div>   
 				
 			</div>
@@ -704,7 +704,7 @@
 				        <td>{[{data.location}]}</td>
 				        <td>{[{data.specialty}]}</td>
 				        <td>{[{data.qualification}]}</td>
-				        <td><button type="button" class="btn btn-danger" ng-click="deleteDoctor(data)">Request Appointment</button></td>
+				        <td><button type="button" class="btn btn-danger" ng-click="reqAppointment(data)">Request Appointment</button></td>
 				      </tr>
 				      
 				    </tbody>

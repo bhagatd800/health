@@ -4,7 +4,7 @@ app.config(function($interpolateProvider) {
   $interpolateProvider.endSymbol('}]}');
 });
 
-app.controller("tabController", ['$scope','getDatas','postDatas','changePassword','postSymptom','getResult', function($scope,getDatas,postDatas,changePassword,postSymptom,getResult)  {
+app.controller("tabController", ['$scope','getDatas','postDatas','changePassword','postSymptom','getResult','getAppointments', function($scope,getDatas,postDatas,changePassword,postSymptom,getResult,getAppointments)  {
 
 $scope.getDocData=function(){  
 getDatas.docData().then(function(data){
@@ -47,6 +47,13 @@ $scope.search=function(){
    })
 }
 };
+$scope.getAppointment=function(){
+getAppointments.getData().then(function(data){
+ $scope.appointmentData= data;
+});
+
+}
+
 $scope.change_password=function(){
   if($scope.password.password1==$scope.password.password2)
 
@@ -78,6 +85,26 @@ app.factory("getDatas",['$http',function($http){
     })
       
     return docDatas;
+
+   }  
+    
+}
+  
+}]);
+app.factory("getAppointments",['$http',function($http){
+  
+  return{
+    getData:function(){
+    Datas=$http({
+      method: 'GET',
+      url: '/appointment/getAppointmentData'
+  }).then(function(response) {
+      
+      return response.data;
+      
+    })
+      
+    return Datas;
 
    }  
     

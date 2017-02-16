@@ -4,9 +4,8 @@
 			</br>
 
 			<ul class="nav nav-tabs nav-justified">
-			<li class="active">
-
-			<a data-toggle="tab" href="#home">Home</a></li>
+			<li class="active" >
+			<a data-toggle="tab" href="#home" ng-init="newDoctor()">Home</a></li>
 
 			
 			<li><a data-toggle="tab" href="#manage_doctor" ng-click="getDoctorData()">Manage Doctor </a></li>
@@ -15,26 +14,21 @@
 			</ul>
 			<div class="tab-content">
 				<div id="home" class="tab-pane fade in active">
-				 <div class="row">
-			    <div class="col-lg-12">
-			    
-
-			        <center>
+				    <center>
 
 			        <h2 class="page-header" style="color:red">New Registered Doctor</h2>
 			        </center>
-			        </br>
-			        
-			     
+			     <div class="w3-card-12" style="width:95%;padding:20px;margin:30px">
+
 			       <div class="input-group" style="width:40%">
 			      <input type="text" class="form-control" placeholder="Search" ng-model="searchDoctor">
 			      <div class="input-group-btn">
 			        <button class="btn btn-default" disabled="disabled"><i class="glyphicon glyphicon-search"></i></button>
 			      </div>
 			    </div>
-			    </br></br>
-			       <center>
-				  <table class="table table-striped">
+			    </br>
+			    <center>
+			     <table class="table table-striped">
 					  <thead class="thead-inverse">
 					    <tr>
 					      <th>Name</th>
@@ -45,33 +39,30 @@
 					    </tr>
 					  </thead>
 					<tbody>
-				      <tr ng-repeat="data in doctorData |filter:searchDoctor">
+				      <tr ng-repeat="data in newDoctor |filter:searchDoctor">
 				        <td>{[{data.name}]}</td>
 				        <td>{[{data.username}]}</td>
 				        <td>{[{data.email}]}</td>
-				        <td><button type="button" class="btn btn-success">Approve</button>
-				      <button type="button" class="btn btn-danger" ng-click="deleteDoctor(data)">Delete</button></td>
+				        <td><button type="button" class="btn btn-success" ng-click="approve(data)">Approve</button>
+				      <button type="button" class="btn btn-danger" ng-click="deleteNewDoctor(data)">Delete</button></td>
 				      </tr>
 				      
 				    </tbody>
 				  </table>
 				</center>
 				</div>
-				</div>
+				
 				</div>
 				
 				
 				<div id="manage_doctor" class="tab-pane fade">
-				<div class="row">
-			    <div class="col-lg-12">
-			    
-
-			        <center>
+				
+			      <center>
 
 			        <h2 class="page-header" style="color:red">Manage Doctor</h2>
 			        </center>
-			        </br>
 			        
+			     <div class="w3-card-4" style="width:95%;padding:20px;margin:30px">   
 			     
 			       <div class="input-group" style="width:40%">
 			      <input type="text" class="form-control" placeholder="Search" ng-model="searchDoctor">
@@ -79,7 +70,7 @@
 			        <button class="btn btn-default" disabled="disabled"><i class="glyphicon glyphicon-search"></i></button>
 			      </div>
 			    </div>
-			    </br></br>
+			    </br>
 			       <center>
 				  <table class="table table-striped">
 					  <thead class="thead-inverse">
@@ -113,16 +104,15 @@
 				</div>
 				</div>
 
-				</div>
+				
 				
 				<div id="manage_patient" class="tab-pane fade">
-				<div class="row">
-			    <div class="col-lg-12">
+				
 			        <center>
 
 			        <h2 class="page-header" style="color:red">Manage Patient</h2>
 			        </center>
-			        </br>
+			        <div class="w3-card-4" style="width:95%;padding:20px;margin:30px">
 			        
 			     
 			       <div class="input-group" style="width:40%">
@@ -131,7 +121,7 @@
 			        <button class="btn btn-default" disabled="disabled"><i class="glyphicon glyphicon-search"></i></button>
 			      </div>
 			    </div>
-			    </br></br>
+			    </br>
 			    <center>
 				  <table class="table table-striped">
 					  <thead class="thead-inverse">
@@ -155,18 +145,17 @@
 				  </table>
 				</center>
 				</div>
-				</div>
+				
 
 				</div>
 
 
 				<div id="change_password" class="tab-pane fade">
-			  	<div class="row">
-			    <div class="col-lg-12">
+			  	
 			        <center>
 
 			        <h2 class="page-header" style="color:red">Change Password</h2>
-
+			        <div class="w3-card-4" style="width:95%;padding:20px;margin:30px">
 					<form ng-submit="change_password()" >
 			   		<table style="width:38%">
 			   	
@@ -190,7 +179,7 @@
 			  	</form>
 			  </center>
 			 </div>
-			</div>
+			
 		</div>
 			</div>
  	</div>

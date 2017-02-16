@@ -25,6 +25,7 @@ var symptom = require('./routes/symptom');
 var admin = require('./routes/admin');
 var register = require('./routes/register');
 var rscript=require('./routes/rscript');
+var appointment=require('./routes/appointment');
 var app = express();
 
 
@@ -94,6 +95,7 @@ app.use('/admin', admin);
 app.use('/symptom', symptom);
 app.use('/register', register);
 app.use('/rscript',rscript);
+app.use('/appointment',appointment);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

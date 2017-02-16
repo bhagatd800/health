@@ -3,7 +3,7 @@ app.config(function($interpolateProvider) {
   $interpolateProvider.startSymbol('{[{');
   $interpolateProvider.endSymbol('}]}');
 });
-app.controller("adminController", ['$scope','getPatientDatas','deleteDoc','getDoctorDatas','deletePatients','changePassword', function($scope,getPatientDatas,deleteDoc,getDoctorDatas,deletePatients,changePassword)  {
+app.controller("adminController", ['$scope','getPatientDatas','deleteDoc','getDoctorDatas','deletePatients','changePassword','getNewDoctor','approveDoctor', function($scope,getPatientDatas,deleteDoc,getDoctorDatas,deletePatients,changePassword,getNewDoctor,approveDoctor)  {
 
 
 $scope.getPatientData=function(){
@@ -14,11 +14,19 @@ $scope.getPatientData=function(){
 });
 
 }
+$scope.newDoctor=function(){
+
+getNewDoctor.getData().then(function(data){
+  $scope.newDoctor=data;
+  //alert($scope.doctorData[0].name);
+});
+}
 
 $scope.getDoctorData= function(){
 
  getDoctorDatas.docData().then(function(data){
   $scope.doctorData=data;
+
   //alert($scope.doctorData[0].name);
 });
 } 
@@ -28,6 +36,27 @@ $scope.getDoctorData= function(){
   deleteDoc.delete(id);
   getDoctorDatas.docData().then(function(data){
   $scope.doctorData=data;
+
+  
+});
+ }
+ $scope.deleteNewDoctor=function(id){
+  
+  deleteDoc.delete(id);
+  getNewDoctor.getData().then(function(data){
+  $scope.newDoctor=data;
+  
+  
+});
+ }
+
+
+ $scope.approve=function(id){
+  
+  approveDoctor.approve(id);
+  getNewDoctor.getData().then(function(data){
+  $scope.newDoctor=data;
+  
   
 });
  }
@@ -75,6 +104,27 @@ return{
     })
       
     return patientDatas;
+
+   }
+
+}
+
+
+}]);
+app.factory("getNewDoctor",['$http',function($http){
+
+return{
+  getData:function(){
+    datas=$http({
+      method: 'GET',
+      url: '/admin/newdoctor'
+  }).then(function(response) {
+      
+      return response.data;
+      
+    })
+      
+    return datas;
 
    }
 
@@ -158,6 +208,30 @@ return{
              'Content-Type': 'application/json'
     }
 }).then(function(password){ //.success is deprecated,so use .then
+    alert("Updated Successfully");
+})
+  .catch(function(err){//using .catch instead of .error as it is deprecated
+    console.log("Error in request =>", err)
+});
+
+  }
+
+}
+
+
+}]);
+app.service("approveDoctor",['$http',function($http){
+
+return{
+  approve:function(id){
+  $http({
+    url: '/admin/approve',
+    method: "POST",
+    data: id,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+}).then(function(approve){ //.success is deprecated,so use .then
     alert("Updated Successfully");
 })
   .catch(function(err){//using .catch instead of .error as it is deprecated

@@ -43,6 +43,23 @@ router.post('/login',function(req,res){
   )}
 })
 });
+router.get('/newdoctor' ,function(req,res){
+  Doctor.newDoctor(function(err,user){
+    if(!user){
+      console.log('error');
+    }
+    else
+    {
+      delete user.password;
+      
+      res.json(user);
+
+    }
+  })
+ 
+
+
+});
 
 router.get('/getDocData' ,function(req,res){
  
@@ -54,7 +71,7 @@ router.get('/getDocData' ,function(req,res){
     else
     {
       delete(user.password);
-      console.log(user);
+      //console.log(user);
       res.json(user);
 
     }
@@ -108,6 +125,21 @@ router.post('/delete_patient',function(req,res){
 
 router.post('/update_password',function(req,res){
   Admin.updatePassword(req.session.admin._id,req.body.password1,function(err,user){
+    if(!user){
+      console.log('error');
+    }
+    else{
+      //res.redirect('/doctor/login');
+    }
+
+  })
+
+
+});
+
+router.post('/approve',function(req,res){
+
+  Doctor.approveDoctor(req.body._id,{status:1},function(err,user){
     if(!user){
       console.log('error');
     }
