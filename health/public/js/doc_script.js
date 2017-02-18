@@ -1,10 +1,10 @@
-var app = angular.module("myapp", []);
+var app = angular.module("myapp", ["ui.bootstrap"]);
 app.config(function($interpolateProvider) {
   $interpolateProvider.startSymbol('{[{');
   $interpolateProvider.endSymbol('}]}');
 });
 
-app.controller("tabController", ['$scope','getDatas','postDatas','changePassword','postSymptom','getResult','getAppointments', function($scope,getDatas,postDatas,changePassword,postSymptom,getResult,getAppointments)  {
+app.controller("tabController", ['$scope','getDatas','postDatas','changePassword','postSymptom','getResult','getAppointments','declineAppointments','setAppointments', function($scope,getDatas,postDatas,changePassword,postSymptom,getResult,getAppointments,declineAppointments,setAppointments)  {
 
 $scope.getDocData=function(){  
 getDatas.docData().then(function(data){
@@ -12,9 +12,115 @@ getDatas.docData().then(function(data){
   
 });
 }
+  $scope.mytime = new Date();
+
+  $scope.hstep = 1;
+  $scope.mstep = 1;
+
+
+
+  $scope.today = function() {
+    $scope.dt = new Date();
+  };
+  $scope.today();
+
+  $scope.clear = function() {
+    $scope.dt = null;
+  };
+
+  $scope.inlineOptions = {
+    customClass: getDayClass,
+    minDate: new Date(),
+    showWeeks: true
+  };
+
+  $scope.dateOptions = {
+    dateDisabled: disabled,
+    formatYear: 'yy',
+    maxDate: new Date(2020, 5, 22),
+    minDate: new Date(),
+    startingDay: 1
+  };
+
+  // Disable weekend selection
+  function disabled(data) {
+    var date = data.date,
+      mode = data.mode;
+    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+  }
+
+  $scope.toggleMin = function() {
+    $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+    $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+  };
+
+  $scope.toggleMin();
+
+  $scope.open1 = function() {
+    $scope.popup1.opened = true;
+  };
+
+  $scope.open2 = function() {
+    $scope.popup2.opened = true;
+  };
+
+  $scope.setDate = function(year, month, day) {
+    $scope.dt = new Date(year, month, day);
+  };
+
+  $scope.formats = ['dd-MMMM-yyyy'];
+
+
+  $scope.popup1 = {
+    opened: false
+  };
+
+  $scope.popup2 = {
+    opened: false
+  };
+
+  function getDayClass(data) {
+    var date = data.date,
+      mode = data.mode;
+    if (mode === 'day') {
+      var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+      for (var i = 0; i < $scope.events.length; i++) {
+        var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+        if (dayToCheck === currentDay) {
+          return $scope.events[i].status;
+        }
+      }
+    }
+
+    return '';
+  }
+
+$scope.setAppointmentId=function(data){
+  $scope.id=data;
+};
+
+$scope.setAppointment=function(){
+  
+ 
+   $scope.setAppointmentData=[{
+    'id':$scope.id,
+    'date':$scope.dt,
+    'time':$scope.mytime
+  }];
+ // alert($scope.setAppointmentData[0].id);
+  setAppointments.postData($scope.setAppointmentData);
+  getAppointments.getData().then(function(data){
+ $scope.appointmentData= data;
+});
+};
+
+
+
 $scope.save=function(){
   postDatas.postDocData($scope.data);
-}
+};
 
 $scope.password={
   'password1':'',
@@ -27,6 +133,16 @@ $scope.symptom={
   'sym4':'',
   'sym5':''
 };
+
+$scope.declineAppointment=function(datas){
+
+  declineAppointments.postData(datas);
+  getAppointments.getData().then(function(data){
+  $scope.appointmentData= data;
+});
+};
+
+
 $scope.search=function(){
   $scope.disease="";
   if(($scope.symptom.sym1==$scope.symptom.sym2)||($scope.symptom.sym1==$scope.symptom.sym3)||($scope.symptom.sym1==$scope.symptom.sym4)||($scope.symptom.sym1==$scope.symptom.sym5)||($scope.symptom.sym2==$scope.symptom.sym3)||($scope.symptom.sym2==$scope.symptom.sym4)||($scope.symptom.sym2==$scope.symptom.sym5)||($scope.symptom.sym3==$scope.symptom.sym4)||($scope.symptom.sym3==$scope.symptom.sym5)||($scope.symptom.sym4==$scope.symptom.sym5)){
@@ -190,6 +306,43 @@ app.factory("getResult",['$http',function($http){
 
    }  
     
+}
+}]);
+
+ app.service("setAppointments",['$http',function($http){
+
+ return{
+  postData:function(data){
+    alert("deepak");
+  $http({
+
+    url: '/appointment/approveAppointment',
+    method: "POST",
+    data: data,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+})
+
+}
+}
+}]);
+
+app.service("declineAppointments",['$http',function($http){
+return{
+  postData:function(data){
+
+    //alert(password.password1);
+  $http({
+    url: '/appointment/declineAppointment',
+    method: "POST",
+    data: data,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+})
+
+}
 }
 }]);
  

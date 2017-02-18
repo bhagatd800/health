@@ -4,7 +4,7 @@ app.config(function($interpolateProvider) {
   $interpolateProvider.endSymbol('}]}');
 });
 
-app.controller("patientController", ['$scope','changePassword','postSymptom','getResult','getDoctorDatas','reqAppointments', function($scope,changePassword,postSymptom,getResult,getDoctorDatas,reqAppointments)  {
+app.controller("patientController", ['$scope','changePassword','postSymptom','getResult','getDoctorDatas','reqAppointments','getappointmentStatus','deleteAppointments', function($scope,changePassword,postSymptom,getResult,getDoctorDatas,reqAppointments,getappointmentStatus,deleteAppointments)  {
 
 $scope.password={
   'password1':'',
@@ -63,7 +63,18 @@ $scope.reqAppointment=function(data){
 
 reqAppointments.postData(data);
 }
+$scope.getAppointmentStatus=function(){
+  getappointmentStatus.getData().then(function(data){
+    $scope.appointmentStatus=data;
+  });
 
+};
+$scope.deleteAppointment=function(data){
+  deleteAppointments.postData(data);
+  getappointmentStatus.getData().then(function(data){
+    $scope.appointmentStatus=data;
+  });
+};
 
 }]);
 
@@ -181,3 +192,40 @@ return{
 }
 
 }]);
+app.factory("getappointmentStatus",['$http',function($http){
+  
+  return{
+    getData:function(){
+    datas=$http({
+      method: 'GET',
+      url: '/appointment/getAppointmentStatus'
+  }).then(function(response) {
+      
+      return response.data;
+      
+    })
+      
+    return datas;
+
+   }  
+    
+}
+}]);
+
+app.service("deleteAppointments",['$http',function($http){
+
+return{
+  postData:function(data){
+
+    //alert(password.password1);
+  $http({
+    url: '/appointment/deleteAppointment',
+    method: "POST",
+    data: data,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+})
+
+}
+}}]);

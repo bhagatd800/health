@@ -17,6 +17,8 @@
     <link href="/css/w3.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="/css/half-slider.css" rel="stylesheet">
+    <link href="/css/material-datetimepicker.min.css" rel="stylesheet">
+    
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -151,6 +153,7 @@ h2 {
      <script src="/js/patient_script.js"></script>
      <script src="/js/doc_script.js"></script> 
      <script src="/js/admin_script.js"></script>
+     <script src="/js/angular-ui/ui-bootstrap-tpls-2.5.0.min.js"></script>
     <!-- jQuery -->
     <script src="/js/jquery.js"></script>
      <script src="/js/bootstrap-select.js"></script>
@@ -168,3 +171,7 @@ h2 {
 </body>
 
 </html>
+<script>var t = Handlebars.compile($('#template-row').html());
+var $html = $(t({date: '2002-02-02'}));
+$html.find('.datePicker').datepicker();
+$('body').append($html);</script>

@@ -7,7 +7,7 @@
 			<ul class="nav nav-tabs nav-justified">
 			<li class="active">
 
-			<a data-toggle="tab" href="#home">Home</a></li>
+			<a data-toggle="tab" href="#home" ng-init="getAppointmentStatus()" ng-click="getAppointmentStatus()">Home</a></li>
 
 			
 			<li><a data-toggle="tab" href="#search">Search</a></li>
@@ -16,8 +16,46 @@
 			</ul>
 			<div class="tab-content">
 			<div id="home" class="tab-pane fade in active">
-			  <h3>HOME</h3>
-			  <p>WELOME PATIENT</p>
+			  <center>
+
+			        <h2 class="page-header" style="color:red">Appointment Status</h2>
+			       
+			     <div class="w3-card-12" style="width:80%;padding:20px;margin:30px">
+
+			       <div class="input-group" style="width:30%">
+			      <input type="text" class="form-control" placeholder="Search" ng-model="searchDoctor">
+			      <div class="input-group-btn">
+			        <button class="btn btn-default" disabled="disabled"><i class="glyphicon glyphicon-search"></i></button>
+			      </div>
+			    </div>
+			    </br>
+			    
+			     <table class="table table-striped">
+					  <thead class="thead-inverse">
+					    <tr>
+					      <th>Patient Name</th>
+					      <th>Doctor Name</th>
+					      <th>Status</th>
+					      <th>Date</th>
+					      <th>Time</th>
+					  	 <th>Action</th>
+
+					    </tr>
+					  </thead>
+					<tbody>
+				      <tr ng-repeat="data in appointmentStatus |filter:searchDoctor">
+				        <td>{[{data.patientName}]}</td>
+				        <td>{[{data.doctorName}]}</td>
+				        <td style="color:green">{[{data.status}]}</td>
+				        <td>{[{data.date}]}</td>
+				        <td>{[{data.time}]}</td>
+				        <td><button type="button" class="btn btn-danger" ng-click="deleteAppointment(data)">Delete</button>
+				     
+				      </tr>
+				      
+				    </tbody>
+				  </table>
+				</center>
 			</div>
 			
 			<div id="search" class="tab-pane fade">
@@ -704,7 +742,7 @@
 				        <td>{[{data.location}]}</td>
 				        <td>{[{data.specialty}]}</td>
 				        <td>{[{data.qualification}]}</td>
-				        <td><button type="button" class="btn btn-danger" ng-click="reqAppointment(data)">Request Appointment</button></td>
+				        <td><button type="button" class="btn btn-success" ng-click="reqAppointment(data)">Request Appointment</button></td>
 				      </tr>
 				      
 				    </tbody>

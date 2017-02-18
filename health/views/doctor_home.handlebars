@@ -10,50 +10,83 @@
 			<a data-toggle="tab" href="#home" ng-init="getAppointment()">Home</a>
 			
 			<li><a data-toggle="tab" href="#search">Search Disease</a></li>
-			<li><a data-toggle="tab" href="#update_disease">Search Hospital</a></li>
+			
 			<li><a data-toggle="tab" href="#update" ng-click="getDocData()">Update_Profile</a></li>
 			<li><a data-toggle="tab" href="#change_password">Change_Password</a></li>
 			</ul>
 			<div class="tab-content">
 			<div id="home" class="tab-pane fade in active">
 			  <center>
-
-			        <h2 class="page-header" style="color:red">New Appointment Request</h2>
-			       
-			     <div class="w3-card-12" style="width:60%;padding:20px;margin:30px">
-
-			       <div class="input-group" style="width:50%">
-			      <input type="text" class="form-control" placeholder="Search" ng-model="searchDoctor">
-			      <div class="input-group-btn">
-			        <button class="btn btn-default" disabled="disabled"><i class="glyphicon glyphicon-search"></i></button>
-			      </div>
-			    </div>
-			    </br>
+				<h2 class="page-header" style="color:red">New Appointment Request</h2>
+			      <div class="w3-card-12" style="width:60%;padding:20px;margin:30px">
+					<div class="input-group" style="width:50%">
+			      		<input type="text" class="form-control" placeholder="Search" ng-model="searchDoctor">
+				      	<div class="input-group-btn">
+				        	<button class="btn btn-default" disabled="disabled"><i class="glyphicon glyphicon-search"></i></button>
+				     	</div>
+			    	</div>
+			    	</br>
 			    
 			     <table class="table table-striped">
 					  <thead class="thead-inverse">
 					    <tr>
 					      <th>Name</th>
-					  	 <th>Action</th>
-
-					    </tr>
+					  	  <th>Action</th>
+						</tr>
 					  </thead>
 					<tbody>
 				      <tr ng-repeat="data in appointmentData |filter:searchDoctor">
 				        <td>{[{data.patientName}]}</td>
-				        <td><button type="button" class="btn btn-success" ng-click="approve(data)">Accept</button>
-				      <button type="button" class="btn btn-danger" ng-click="deleteNewDoctor(data)">Decline</button></td>
+				        <td>
+				        	<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" ng-click="setAppointmentId(data._id)">Accept</button>
+				      		<button type="button" class="btn btn-danger" ng-click="declineAppointment(data)">Decline</button>
+				      	</td>
 				      </tr>
 				      
 				    </tbody>
 				  </table>
+				  </div>
 				</center>
-				
+				<div class="modal fade" id="myModal" role="dialog">
+				    <div class="modal-dialog">
+				      <div class="modal-content">
+				        <div class="modal-header" style="background-color:red">
+				          <button type="button" class="close" data-dismiss="modal">&times;</button>
+				          <center> <h4 class="modal-title">Set Appointment</h4></center>
+				        </div>
+				        <div class="modal-body">
+					        <label>Select Date</label>
+					        </br>
+					        </br>
+				       		<div class="row">
+
+				       			<div class="col-md-6">
+				       	  			<p class="input-group">
+					       	   		 	<input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+					       	    		<span class="input-group-btn">
+					       	      			<button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+					       	    		</span>
+
+				       	  			</p>
+				       	   			<p>Selected date is:{[{dt}]}</p>
+				       			</div>
+				       		</div>
+				       		</br>
+				       		<label>Select Time</label>
+				       		</br>
+				          	<div uib-timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian">
+				          	</div>
+				        	<div class="modal-footer">
+				         		 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				          		 <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="setAppointment()">Ok</button>
+				        	</div>
+				      </div>
+				      
+				    </div>
+				  </div>
+				  </div>
 			</div>
-			<div id="update_disease" class="tab-pane fade">
-			  <h3>Menu 1</h3>
-			  <p>Search Hospital</p>
-			</div>
+			
 			<div id="search" class="tab-pane fade">
 			  <div class="row">
 			    <div class="col-lg-12">
