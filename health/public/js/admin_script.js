@@ -1,9 +1,41 @@
-var app = angular.module("myadmin", []);
+var app = angular.module("myadmin", ['ngFileUpload']);
 app.config(function($interpolateProvider) {
   $interpolateProvider.startSymbol('{[{');
   $interpolateProvider.endSymbol('}]}');
 });
-app.controller("adminController", ['$scope','getPatientDatas','deleteDoc','getDoctorDatas','deletePatients','changePassword','getNewDoctor','approveDoctor', function($scope,getPatientDatas,deleteDoc,getDoctorDatas,deletePatients,changePassword,getNewDoctor,approveDoctor)  {
+app.controller("adminController", ['$scope','Upload','getPatientDatas','deleteDoc','getDoctorDatas','deletePatients','changePassword','getNewDoctor','approveDoctor', function($scope,Upload,getPatientDatas,deleteDoc,getDoctorDatas,deletePatients,changePassword,getNewDoctor,approveDoctor)  {
+
+
+
+        $scope.uploadImage = function(){
+              // alert($scope.file.orginalname);
+               $scope.upload($scope.file); //call upload function
+          
+        };
+        $scope.upload = function (file) {
+           $scope.file=Upload.rename(file,$scope.hospitalName + file.name.substring(file.type.lastIndexOf('/') + 1, file.name.length));
+            Upload.upload({
+                url: '/admin/upload', //webAPI exposed to upload the file
+                data:{file:file
+} //pass file as data, should be user ng-model
+            }).then(function (resp) { //upload function returns a promise
+                if(resp.data.error_code === 0){ //validate success
+                  alert('Success ' + resp.config.data.file.name + 'uploaded. Response: ');
+                } else {
+                    alert('an error occured');
+                }
+            }, function (resp) { //catch error
+                console.log('Error status: ' + resp.status);
+                alert('Error status: ' + resp.status);
+            }, function (evt) {
+                console.log(evt);
+                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+                $scopr.progress = 'progress: ' + progressPercentage + '% '; // capture upload progress
+            });
+        
+        };
+
 
 
 $scope.getPatientData=function(){
@@ -32,22 +64,25 @@ $scope.getDoctorData= function(){
 } 
 
  $scope.deleteDoctor=function(id){
-  
+  if(confirm("Do you want to Delete user"))
+  {
   deleteDoc.delete(id);
   getDoctorDatas.docData().then(function(data){
   $scope.doctorData=data;
 
   
 });
+}
  }
  $scope.deleteNewDoctor=function(id){
-  
+  if(confirm("Do you want to Delete user")){
   deleteDoc.delete(id);
   getNewDoctor.getData().then(function(data){
   $scope.newDoctor=data;
   
   
 });
+}
  }
 
 
@@ -61,12 +96,13 @@ $scope.getDoctorData= function(){
 });
  }
   $scope.deletePatient=function(id){
-  
+  if(confirm("Do you want to Delete user")){
   deletePatients.delete(id);
   getPatientDatas.patientsData().then(function(data){
   $scope.patientData=data;
   
 });
+}
 }
 $scope.password={
   'password1':'',

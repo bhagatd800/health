@@ -10,6 +10,7 @@
 			
 			<li><a data-toggle="tab" href="#manage_doctor" ng-click="getDoctorData()">Manage Doctor </a></li>
 			<li><a data-toggle="tab" href="#manage_patient" ng-click="getPatientData()">Manage Patient </a></li>
+			<li><a data-toggle="tab" href="#upload_hospital" >Upload Hospital </a></li>
 			<li><a data-toggle="tab" href="#change_password">Change Password </a></li>
 			</ul>
 			<div class="tab-content">
@@ -148,6 +149,36 @@
 				
 
 				</div>
+				 <div id="upload_hospital" class="tab-pane fade">
+			 
+				 
+			 		 <form name="upload_form">
+                Single Image with validations
+           
+
+             <input type="text" class="form-control" placeholder="Hospital Name" ng-model="hospitalName"/>   
+            <input
+               type="file"
+               ngf-select
+               ng-model="file"
+               nfgName={[{hospitalName}]}
+               name="file"
+               ngf-pattern="'image/*'"
+               accept="image/*"
+               ngf-max-size="20MB"
+               />
+            
+            <i ng-show="upload_form.file.$error.required">*required</i><br>
+            <i ng-show="upload_form.file.$error.maxSize">File too large
+            {[{file.size / 1000000|number:1}]}MB: max 20M</i>
+            
+           
+            <button type="submit" ng-click="uploadImage()">Upload</button>
+
+            
+        </form>
+
+			 	</div>
 
 
 				<div id="change_password" class="tab-pane fade">
@@ -178,6 +209,8 @@
 			  		<button type="submit" class="btn btn-default">Submit</button>
 			  	</form>
 			  </center>
+			 </div>
+			 <div id="upload_hospital" class="tab-pane fade">
 			 </div>
 			
 		</div>

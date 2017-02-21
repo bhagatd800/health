@@ -66,11 +66,23 @@ router.get('/getAppointmentStatus',function(req,res){
 
 router.post('/deleteAppointment',function(req,res){
 
-	console.log("deepak");
+	
 	Appointment.deleteAppointments(req.body._id,function(err,callback){
 		if(err){
 
 		}
+	});
+
+});
+
+router.get('/getApprovedAppointment',function(req,res){
+
+	Appointment.getApprovedAppointments(req.session.doctor._id,function(err,datas){
+		if(err){
+
+		}
+	
+		res.json(datas);
 	});
 
 });

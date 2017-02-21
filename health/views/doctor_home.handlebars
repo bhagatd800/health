@@ -7,8 +7,9 @@
 			<ul class="nav nav-tabs nav-justified" >
 			<li class="active">
 
-			<a data-toggle="tab" href="#home" ng-init="getAppointment()">Home</a>
-			
+			<a data-toggle="tab" href="#home" ng-init="getAppointment()" ng-click="getAppointment()"
+			 >Home</a>
+			<li><a data-toggle="tab" href="#appointment" ng-click="getApprovedAppointment()">Your Appointment</a></li>
 			<li><a data-toggle="tab" href="#search">Search Disease</a></li>
 			
 			<li><a data-toggle="tab" href="#update" ng-click="getDocData()">Update_Profile</a></li>
@@ -85,9 +86,54 @@
 				    </div>
 				  </div>
 				  </div>
+				  
+				 
+
 			</div>
+
+			<div id="appointment" class="tab-pane fade">
+
+ <center>
+				<h2 class="page-header" style="color:red">Approved Appointments</h2>
+			      <div class="w3-card-12" style="width:80%;padding:20px;margin:30px">
+					<div class="input-group" style="width:50%">
+			      		<input type="text" class="form-control" placeholder="Search" ng-model="searchDoctor">
+				      	<div class="input-group-btn">
+				        	<button class="btn btn-default" disabled="disabled"><i class="glyphicon glyphicon-search"></i></button>
+				     	</div>
+			    	</div>
+			    	</br>
+			    
+			     <table class="table table-striped">
+					  <thead class="thead-inverse">
+					    <tr>
+					      <th>Patient Name</th>
+					  	  <th>Doctor Name</th>
+					  	  <th>Status</th>
+					  	  <th>Date</th>
+					  	  <th>Time</th>
+						</tr>
+					  </thead>
+					<tbody>
+				      <tr ng-repeat="data in approvedAppointmentData |filter:searchDoctor">
+				        <td>{[{data.patientName}]}</td>
+				        <td>{[{data.doctorName}]}</td>
+				        <td style="color: green">{[{data.status}]}</td>
+				        <td>{[{data.date}]}</td>
+				        <td>{[{data.time}]}</td>
+				      
+				      </tr>
+				      
+				    </tbody>
+				  </table>
+				  </div>
+				</center>
+
+			</div>
+
 			
 			<div id="search" class="tab-pane fade">
+
 			  <div class="row">
 			    <div class="col-lg-12">
 			    <center>
@@ -98,6 +144,7 @@
   
 				 <label style="padding-left:80px;padding-bottom:25px;padding-top:45px"><div class="form-group">Symptom 1:</div></label>
 					  <select class="selectpicker" data-live-search="true" name="sym1" ng-model="symptom.sym1">
+					  <option></option>
 					  <option>headache</option>
 						<option>fever </option>
 						<option>loss of appetite</option>
@@ -223,6 +270,7 @@
 					
 					<label style="padding-left:90px"><div class="form-group">Symptom 2:</div></label>
 					<select class="selectpicker" data-live-search="true" name="sym2" ng-model="symptom.sym2">
+					<option></option>
 					  <option>headache</option>
 						<option>fever </option>
 						<option>loss of appetite</option>
@@ -349,6 +397,7 @@
 					</br>
 					<label style="padding-left:80px;padding-bottom:25px;padding-top:25px"><div class="form-group">Symptom 3:</div></label>
 					<select class="selectpicker" data-live-search="true" name="sym3" ng-model="symptom.sym3">
+					  <option></option>
 					  <option>headache</option>
 					<option>fever </option>
 					<option>loss of appetite</option>
@@ -473,6 +522,7 @@
 					</select>
 					<label style="padding-left:90px"><div class="form-group">Symptom 4:</div></label>
 					<select class="selectpicker" data-live-search="true" name="sym4" ng-model="symptom.sym4">
+					 <option></option>
 					 <option>headache</option>
 						<option>fever </option>
 						<option>loss of appetite</option>
@@ -597,6 +647,7 @@
 					</select>
 					<label style="padding-left:80px;padding-bottom:25px;padding-top:25px"><div class="form-group">Symptom 5:</div></label>
 					<select class="selectpicker" data-live-search="true" name="sym5" ng-model="symptom.sym5">
+					  <option></option>
 					  <option>headache</option>
 						<option>fever </option>
 						<option>loss of appetite</option>

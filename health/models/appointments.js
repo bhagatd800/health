@@ -67,3 +67,8 @@ module.exports.approveAppointments=function(id,data,callback){
       console.log(err);
   });
 }
+
+module.exports.getApprovedAppointments=function(id,callback){
+	
+	appointment.find({doctorid:id,status:"approved"},callback);
+}

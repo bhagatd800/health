@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Doctor = require('../models/doctors');
 var Patient =require('../models/patients');
-
+var flash = require('connect-flash');
 router.get('/register', function(req, res) {
   res.render('register');
 });
@@ -12,23 +12,11 @@ router.post('/register', function(req, res){
 	var email = req.body.email;
 	var username = req.body.username;
 	var password = req.body.password;
-	var password2 = req.body.password2;
 	var user_type=req.body.user_type;
-	//console.log(user_type);
+	console.log(user_type);
 
-	// Validation
-	req.checkBody('name', 'Name is required').notEmpty();
-	req.checkBody('email', 'Email is required').notEmpty();
-	req.checkBody('email', 'Email is not valid').isEmail();
-	req.checkBody('username', 'Username is required').notEmpty();
-	req.checkBody('password', 'Password is required').notEmpty();
-	req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
-	var errors = req.validationErrors();
-
-	if(errors){
-		res.render('error');
-	} else if (user_type==='Patient')
+	if (user_type==='Patient')
 		{
 		var newPatient = new Patient({
 			name: name,
@@ -40,7 +28,7 @@ router.post('/register', function(req, res){
 
 		Patient.createPatient(newPatient, function(err, user){
 			if(err) throw err;
-			console.log(user);
+			//console.log(user);
 		});
 
 		req.flash('success_msg', 'You are registered and can now login');
@@ -48,7 +36,7 @@ router.post('/register', function(req, res){
 		res.redirect('/patient/login');
 	}
 
-	else if (user_type==='Doctor')
+	if (user_type==='Doctor')
 		{
 		var newDoctor = new Doctor({
 			name: name,
@@ -61,12 +49,11 @@ router.post('/register', function(req, res){
 
 		Doctor.createDoctor(newDoctor, function(err, user){
 			if(err) throw err;
-			console.log(user);
+			//console.log(user);
 		});
 
 		req.flash('success_msg', 'You are registered and can now login');
 
-		res.redirect('/doctor/login');
 	}
 });
 

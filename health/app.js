@@ -13,7 +13,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 
-
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/healthcare');
 var db = mongoose.connection;
 
@@ -35,7 +35,7 @@ app.engine('handlebars', exphbs({defaultLayout:'layout'}));
 app.set('view engine', 'handlebars');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public/images', 'health.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -60,7 +60,7 @@ app.use(passport.session());
 
 // Express Validator
 app.use(expressValidator({
-  errorFormatter: function(param, msg, value) {
+  errorForatter: function(param, msg, value) {
       var namespace = param.split('.')
       , root    = namespace.shift()
       , formParam = root;

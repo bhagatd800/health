@@ -1,17 +1,19 @@
-var app = angular.module("myapp", ["ui.bootstrap"]);
+var app = angular.module("myapp", ['ui.bootstrap']);
 app.config(function($interpolateProvider) {
   $interpolateProvider.startSymbol('{[{');
   $interpolateProvider.endSymbol('}]}');
 });
 
-app.controller("tabController", ['$scope','getDatas','postDatas','changePassword','postSymptom','getResult','getAppointments','declineAppointments','setAppointments', function($scope,getDatas,postDatas,changePassword,postSymptom,getResult,getAppointments,declineAppointments,setAppointments)  {
+app.controller("tabController", ['$scope','getDatas','postDatas','changePassword','postSymptom','getResult','getAppointments','declineAppointments','setAppointments','getApprovedAppointments', function($scope,getDatas,postDatas,changePassword,postSymptom,getResult,getAppointments,declineAppointments,setAppointments,getApprovedAppointments)  {
 
 $scope.getDocData=function(){  
 getDatas.docData().then(function(data){
   $scope.data=data;
   
 });
+
 }
+$scope.password="deepak";
   $scope.mytime = new Date();
 
   $scope.hstep = 1;
@@ -112,7 +114,12 @@ $scope.setAppointment=function(){
  // alert($scope.setAppointmentData[0].id);
   setAppointments.postData($scope.setAppointmentData);
   getAppointments.getData().then(function(data){
- $scope.appointmentData= data;
+  $scope.appointmentData= data;
+  });
+  getApprovedAppointments.getData().then(function(data){
+  $scope.approvedAppointmentData= data;
+
+
 });
 };
 
@@ -142,7 +149,13 @@ $scope.declineAppointment=function(datas){
 });
 };
 
+$scope.getApprovedAppointment=function(){
+  getApprovedAppointments.getData().then(function(data){
+  $scope.approvedAppointmentData= data;
+});
 
+
+}
 $scope.search=function(){
   $scope.disease="";
   if(($scope.symptom.sym1==$scope.symptom.sym2)||($scope.symptom.sym1==$scope.symptom.sym3)||($scope.symptom.sym1==$scope.symptom.sym4)||($scope.symptom.sym1==$scope.symptom.sym5)||($scope.symptom.sym2==$scope.symptom.sym3)||($scope.symptom.sym2==$scope.symptom.sym4)||($scope.symptom.sym2==$scope.symptom.sym5)||($scope.symptom.sym3==$scope.symptom.sym4)||($scope.symptom.sym3==$scope.symptom.sym5)||($scope.symptom.sym4==$scope.symptom.sym5)){
@@ -154,10 +167,11 @@ $scope.search=function(){
    // $scope.disease="Your Symptom shows you might have";
     if($scope.diseases=="Sorry"){
 
-      $scope.disease="Sorry no result Found. Look for Doctor or nearby Hospital";
+      $scope.disease="Sorry no result Found";
+
     }
     else{
-      $scope.disease="Your Symptom shows you might have"+" "+$scope.diseases.Disease+"."+"You can aslo search for Doctor or Near by Hospital";
+      $scope.disease="Symptom shows "+" "+$scope.diseases.Disease+".";
     }
 
    })
@@ -345,4 +359,22 @@ return{
 }
 }
 }]);
- 
+ app.factory("getApprovedAppointments",['$http',function($http){
+  
+  return{
+    getData:function(){
+    datas=$http({
+      method: 'GET',
+      url: '/appointment/getApprovedAppointment'
+  }).then(function(response) {
+      
+      return response.data;
+      
+    })
+      
+    return datas;
+
+   }  
+    
+}
+}]);
