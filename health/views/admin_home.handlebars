@@ -151,32 +151,53 @@
 				</div>
 				 <div id="upload_hospital" class="tab-pane fade">
 			 
-				 
-			 		 <form name="upload_form">
-                Single Image with validations
-           
+				 <div class="row">
+			    	<div class="col-lg-12">
+			   		 <center>
+			    		<h2 class="page-header" style="color:yellow">Upload Hospitals</h2>
+			    	</center>
+			    	<div style="padding-left:90px;padding-bottom:25px;padding-top:25px;padding-right:90px">
+			     	<div class="w3-card-4 w3-light-grey" style="width:100%;">
+			    
+  					<form name="upload_form">
+  					
+					<label style="margin-top:40px;margin-right: 10px;margin-left:40px; ">Name:</label>
+				 	
+		             <input type="text" placeholder="Hospital Name" ng-model="hospitalName" style="padding-right:20px;"/> 
+ 					
+		             <label style="margin-left:115px ">City:</label> 
 
-             <input type="text" class="form-control" placeholder="Hospital Name" ng-model="hospitalName"/>   
-            <input
-               type="file"
-               ngf-select
-               ng-model="file"
-               nfgName={[{hospitalName}]}
-               name="file"
-               ngf-pattern="'image/*'"
-               accept="image/*"
-               ngf-max-size="20MB"
-               />
-            
-            <i ng-show="upload_form.file.$error.required">*required</i><br>
-            <i ng-show="upload_form.file.$error.maxSize">File too large
-            {[{file.size / 1000000|number:1}]}MB: max 20M</i>
-            
-           
-            <button type="submit" ng-click="uploadImage()">Upload</button>
+		             <input type="text" placeholder="city" style="margin-left:10px ">
 
-            
-        </form>
+		             <label style="margin-right: 10px;margin-left:36px; margin-top: 40px; ">Phone:</label>
+		             <input type="text" placeholder="phone number" ng-model="city"/>
+		              <label style="margin-left:90px;margin-right: 10px">Specialty:</label>
+		             <input type="text" placeholder="specialty" ng-model="city"/>
+		           
+		             <label style="margin-left:21px; margin-right: 10px; ">Address:</label>
+		             <textarea type="text" placeholder="address" ng-model="city" style="margin-top:40px "></textarea> </br>
+		           
+		             <input style="margin-left:110px;margin-top: 40px" 
+		               type="file"
+		               ngf-select
+		               ng-model="file"
+		               nfgName={[{hospitalName}]}
+		               name="file"
+		               ngf-pattern="'image/*'"
+		               accept="image/*"
+		               ngf-max-size="20MB"
+		               />
+		            
+	
+	
+		           <center>
+		            <button class="btn btn-primary btn-lg" type="submit" ng-click="uploadImage()" style="margin-bottom: 30px;margin-top: 10px">Upload</button>
+		           </center> 
+		            </form>
+		            </div>
+		          </div>
+		            </div>
+		            </div>
 
 			 	</div>
 
