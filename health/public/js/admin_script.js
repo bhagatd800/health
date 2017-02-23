@@ -3,23 +3,35 @@ app.config(function($interpolateProvider) {
   $interpolateProvider.startSymbol('{[{');
   $interpolateProvider.endSymbol('}]}');
 });
-app.controller("adminController", ['$scope','Upload','getPatientDatas','deleteDoc','getDoctorDatas','deletePatients','changePassword','getNewDoctor','approveDoctor', function($scope,Upload,getPatientDatas,deleteDoc,getDoctorDatas,deletePatients,changePassword,getNewDoctor,approveDoctor)  {
+app.controller("adminController", ['$scope','Upload','getPatientDatas','deleteDoc','getDoctorDatas','deletePatients','changePassword','getNewDoctor','approveDoctor','uploadHospital', function($scope,Upload,getPatientDatas,deleteDoc,getDoctorDatas,deletePatients,changePassword,getNewDoctor,approveDoctor,uploadHospital)  {
 
+$scope.hospitalData={
 
+'name':'',
+'city':'',
+'phone':'',
+'specialty':'',
+'address':'',
+'imageName':''
+};
 
         $scope.uploadImage = function(){
-              // alert($scope.file.orginalname);
-               $scope.upload($scope.file); //call upload function
+              alert($scope.hospitalData.name);
+              $scope.upload($scope.file);
+              uploadHospital.upload($scope.hospitalData);
+              
           
         };
         $scope.upload = function (file) {
-           $scope.file=Upload.rename(file,$scope.hospitalName + file.name.substring(file.type.lastIndexOf('/') + 1, file.name.length));
+           $scope.file=Upload.rename(file,$scope.hospitalData.name + file.name.substring(file.type.lastIndexOf('/') + 1, file.name.length));
+           $scope.hospitalData.imageName=$scope.file.ngfName;
             Upload.upload({
                 url: '/admin/upload', //webAPI exposed to upload the file
                 data:{file:file
 } //pass file as data, should be user ng-model
             }).then(function (resp) { //upload function returns a promise
-                if(resp.data.error_code === 0){ //validate success
+                if(resp.data.error_code === 0){
+
                   alert('Success ' + resp.config.data.file.name + 'uploaded. Response: ');
                 } else {
                     alert('an error occured');
@@ -280,3 +292,24 @@ return{
 
 
 }]);
+
+
+
+
+app.service("uploadHospital",['$http',function($http){
+
+return{
+  upload:function(password){
+  $http({
+    url: '/admin/uploadhospital',
+    method: "POST",
+    data: password,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+})
+
+}
+
+}}
+]);

@@ -163,19 +163,19 @@
   					
 					<label style="margin-top:40px;margin-right: 10px;margin-left:40px; ">Name:</label>
 				 	
-		             <input type="text" placeholder="Hospital Name" ng-model="hospitalName" style="padding-right:20px;"/> 
+		             <input type="text" placeholder="Hospital Name" ng-model="hospitalData.name" style="padding-right:20px;"/> 
  					
 		             <label style="margin-left:115px ">City:</label> 
 
-		             <input type="text" placeholder="city" style="margin-left:10px ">
+		             <input type="text" placeholder="city" style="margin-left:10px " ng-model="hospitalData.city">
 
 		             <label style="margin-right: 10px;margin-left:36px; margin-top: 40px; ">Phone:</label>
-		             <input type="text" placeholder="phone number" ng-model="city"/>
+		             <input type="text" placeholder="phone number" ng-model="hospitalData.phone" ng-module="hospitalData.number"/>
 		              <label style="margin-left:90px;margin-right: 10px">Specialty:</label>
-		             <input type="text" placeholder="specialty" ng-model="city"/>
+		             <input type="text" placeholder="specialty" ng-model="hospitalData.specialty"/>
 		           
 		             <label style="margin-left:21px; margin-right: 10px; ">Address:</label>
-		             <textarea type="text" placeholder="address" ng-model="city" style="margin-top:40px "></textarea> </br>
+		             <textarea type="text" placeholder="address" ng-model="hospitalData.address" style="margin-top:40px "></textarea> </br>
 		           
 		             <input style="margin-left:110px;margin-top: 40px" 
 		               type="file"
@@ -191,7 +191,7 @@
 	
 	
 		           <center>
-		            <button class="btn btn-primary btn-lg" type="submit" ng-click="uploadImage()" style="margin-bottom: 30px;margin-top: 10px">Upload</button>
+		            <button class="btn btn-primary btn-lg" type="button" ng-click="uploadImage()" style="margin-bottom: 30px;margin-top: 10px">Upload</button>
 		           </center> 
 		            </form>
 		            </div>

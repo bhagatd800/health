@@ -4,6 +4,7 @@ var session = require('express-session');
 var Admin = require('../models/admin');
 var Patient = require('../models/patients');
 var Doctor = require('../models/doctors');
+var Hospital = require('../models/hospital');
 var multer = require('multer');
 
 
@@ -175,6 +176,23 @@ router.post('/approve',function(req,res){
     }
 
   })
+
+
+});
+
+
+router.post('/uploadhospital',function(req,res){
+
+  Hospital.upload(req.body,function(err,cb){
+
+if(!cb){
+
+}
+else{
+  
+}
+
+  });
 
 
 });
