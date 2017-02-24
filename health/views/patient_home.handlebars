@@ -768,7 +768,6 @@
 			    <center>
 			    <h2 class="page-header" style="color:yellow">Hospitals</h2>
 			    </center>
-			    {[{hospitalData}]}
 			     <div class="w3-card-4 w3-light-grey" >
 			      <div class="input-group" style="width: 40%;
 													padding-top: 31px;
@@ -792,15 +791,25 @@
 								padding-top: 40px;
 								padding-right: 40px;
 								padding-left: 85px;
-								width: 410px;
+								width: 517px;
 								height: 320px;">
-								</br>
-								
-			     		<P>Hospital Name:{[{data.name}]}</P>
-			     		<p>City:{[{data.city}]}</p>
-			     		<p>Specialty:{[{data.specialty}]}</p>
-			     		<p>Phone:{[{data.phone}]}</p>
-			     		<p>Address:{[{data.address}]}</p>
+						<table>		</br>
+						<tr>		
+			     		<td style="padding-right: 46px;padding-bottom: 10px;"><strong>Name:</strong></td><td style="padding-bottom: 10px;">{[{data.name}]}</td>
+			     		</tr>
+			     		<tr>
+			     		<td style="padding-bottom: 10px;"><strong>City:</strong></td><td style="padding-bottom: 10px;">{[{data.city}]}</td>
+			     		</tr>
+			     		<tr>
+			     		<td style="padding-bottom: 10px;"><strong>Specialty:</strong></td><td style="padding-bottom: 10px;">{[{data.specialty}]}</td>
+			     		</tr>
+			     		<tr>
+
+			     		<td style="padding-bottom: 10px;"><strong>Phone:</strong></td><td style="padding-bottom: 10px;">{[{data.phone}]}</td>
+			     		</tr>
+			     		<tr>
+			     		<td style="padding-bottom: 10px;"><strong>Address:</strong></td><td style="padding-bottom: 10px;">{[{data.address}]}</td>
+			     		</table>
 			     		</div>
 
 			     	</div>
