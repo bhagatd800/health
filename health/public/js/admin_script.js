@@ -16,14 +16,13 @@ $scope.hospitalData={
 };
 
         $scope.uploadImage = function(){
-              alert($scope.hospitalData.name);
               $scope.upload($scope.file);
               uploadHospital.upload($scope.hospitalData);
               
           
         };
         $scope.upload = function (file) {
-           $scope.file=Upload.rename(file,$scope.hospitalData.name + file.name.substring(file.type.lastIndexOf('/') + 1, file.name.length));
+           $scope.file=Upload.rename(file,$scope.hospitalData.city+$scope.hospitalData.name +"."+ file.name.substring(file.type.lastIndexOf('/'), file.name.length).replace('/', '.'));
            $scope.hospitalData.imageName=$scope.file.ngfName;
             Upload.upload({
                 url: '/admin/upload', //webAPI exposed to upload the file

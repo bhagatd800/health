@@ -3,6 +3,7 @@ var router = express.Router();
 
 
 var Patient = require('../models/patients');
+var Hospital = require('../models/hospital');
 
 
 /* GET users listing. */
@@ -64,6 +65,20 @@ router.post('/update_password',function(req,res){
   })
 
 
+});
+
+
+router.get('/getHospitalData', function(req, res) {
+
+    Hospital.getHospitalDatas(function(err,datas){
+    if(err){
+
+    }
+  
+    res.json(datas);
+  });
+
+  
 });
 
 

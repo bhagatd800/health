@@ -39,3 +39,8 @@ module.exports.upload=function(data,cb){
       console.log(err);
   });
 }
+
+module.exports.getHospitalDatas=function(callback){
+	
+	hospital.find(callback);
+}
