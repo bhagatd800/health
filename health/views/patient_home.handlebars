@@ -719,7 +719,11 @@
 			        <h2 class="page-header" style="color:red">Search Doctor</h2>
 			        </center>
 			        </br>
-			        
+			        <center>
+			        {{#if messages.reqinfo}}
+			        <p>{{messages.reqinfo}}</p>
+			        {{/if}}
+			        </center>
 			     
 			       <div class="input-group" style="width:40%">
 			      <input type="text" class="form-control" placeholder="Search" ng-model="searchDoctor">

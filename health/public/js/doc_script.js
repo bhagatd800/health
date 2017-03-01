@@ -327,7 +327,6 @@ app.factory("getResult",['$http',function($http){
 
  return{
   postData:function(data){
-    alert("deepak");
   $http({
 
     url: '/appointment/approveAppointment',

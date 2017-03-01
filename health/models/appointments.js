@@ -30,11 +30,7 @@ var appointment = module.exports = mongoose.model('appointment', AppointmentSche
 
 module.exports.reqAppointment = function(data, callback){
 	console.log(data);
-	appointment.update({doctorid:data.doctorid,patientid:data.patientid},{$set:data},{ upsert: true },function(err,docs){
-
-    if(err)
-      console.log(err);
-  });
+	appointment.update({doctorid:data.doctorid,patientid:data.patientid},{$set:data},{ upsert: true },callback);
 	
 }
 module.exports.getAppointmentDatas=function(id,callback){
@@ -64,11 +60,11 @@ module.exports.approveAppointments=function(id,data,callback){
 		appointment.update({_id:id},{$set:data},{ upsert: false },function(err,docs){
 
     if(err)
-      console.log(err);
-  });
+      console.log(err)
+;  });
 }
 
-module.exports.getApprovedAppointments=function(id,callback){
+module.exports.getApprovedAppointments=function(id,date,callback){
 	
-	appointment.find({doctorid:id,status:"approved"},callback);
+	appointment.find({doctorid:id,status:"approved",date:{$gte:date}},callback);
 }

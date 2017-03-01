@@ -48,13 +48,16 @@ router.get('/register', function(req,res) {
 router.post('/login',function(req,res){
 	Admin.getAdminByUsername(req.body.username,function(err,user){
     if(!user){
-      console.log("invalid username")
+      req.flash('logininfo', 'Invalid UserName or Password');
       res.redirect('/admin');
     } 
     else{
         Admin.comparePassword(req.body.password, user.password, function(err, isMatch){
       
-       // if(err) throw err;
+        if(!isMatch){
+          req.flash('logininfo', 'Invalid UserName or Password');
+          res.redirect('/admin');
+        }
         if(isMatch){
           delete user.password;
           req.session.doctor=null;
@@ -63,9 +66,7 @@ router.post('/login',function(req,res){
           
           res.redirect('/admin/admin_home');
         
-      } else {
-        console.log('Invalid password');
-      }
+      } 
         
       }
   )}

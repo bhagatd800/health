@@ -26,13 +26,16 @@ router.get('/doctor_home', function(req, res, next) {
 router.post('/login',function(req,res){
   Doctor.getDoctorByUsername(req.body.username,function(err,user){
     if(!user){
-      console.log("invalid username")
+      req.flash('logininfo', 'Invalid UserName or Password');
       res.redirect('/doctor/login');
     } 
     else{
         Doctor.comparePassword(req.body.password, user.password, function(err, isMatch){
       
-       // if(err) throw err;
+        if(!isMatch){
+          req.flash('logininfo', 'Invalid UserName or Password');
+          res.redirect('/doctor/login');
+        }
         if(isMatch){
           delete user.password;
           req.session.patient=null;
@@ -41,9 +44,7 @@ router.post('/login',function(req,res){
           
           res.redirect('/doctor/doctor_home');
         
-      } else {
-        console.log('Invalid password');
-      }
+      } 
         
       }
   )}

@@ -12,6 +12,8 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+var flash = require('express-flash');
+
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/healthcare');
@@ -78,7 +80,6 @@ app.use(expressValidator({
 
 // Connect Flash
 app.use(flash());
-
 // Global Vars
 app.use(function (req, res, next) {
   res.locals.success_msg = req.flash('success_msg');
