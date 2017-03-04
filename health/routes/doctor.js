@@ -70,11 +70,11 @@ router.get('/getDocData' ,function(req,res){
 });
 router.post('/update_profile',function(req,res){
   Doctor.updateProfile(req.session.doctor._id,req.body, function(err,user){
-    if(!user){
-      console.log('error');
+    if(err){
+      res.json({"errorcode":0})
     }
     else{
-      //
+      res.json({"errorcode":1})
     }
 
   })

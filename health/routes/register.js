@@ -13,7 +13,7 @@ router.post('/register', function(req, res){
 	var username = req.body.username;
 	var password = req.body.password;
 	var user_type=req.body.user_type;
-	console.log(user_type);
+	//console.log(user_type);
 
 
 	if (user_type==='Patient')
@@ -27,13 +27,14 @@ router.post('/register', function(req, res){
 		});
 
 		Patient.createPatient(newPatient, function(err, user){
-			if(err) throw err;
-			//console.log(user);
+			if(err){
+				res.json({"errorcode":1})
+			}
+			else{
+				res.json({"errorcode":0})
+			}
 		});
 
-		req.flash('success_msg', 'You are registered and can now login');
-
-		res.redirect('/patient/login');
 	}
 
 	if (user_type==='Doctor')
@@ -48,13 +49,51 @@ router.post('/register', function(req, res){
 		});
 
 		Doctor.createDoctor(newDoctor, function(err, user){
-			if(err) throw err;
-			//console.log(user);
+			if(err){
+				res.json({"errorcode":1})
+			}
+			else{
+				res.json({"errorcode":0})
+			}
 		});
-
-		req.flash('success_msg', 'You are registered and can now login');
-
 	}
+});
+
+router.get('/getUser',function(req,res){
+var data=[];
+Doctor.getDoctorUserName(function(err,user){
+
+if(user){
+	var doctorData=user;
+	//console.log(doctorData);
+	for(i=0;i<doctorData.length;i++){
+		//console.log(doctorData[i].username);
+		var item={
+		username:doctorData[i].username
+		 }
+		 //console.log(item);
+		 data.push(item);
+	}
+	//console.log(data);
+}
+
+Patient.getEntireData(function(err,user){
+if(user){
+		var patientData=user;
+		//console.log(patientData);
+		for(i=0;i<patientData.length;i++){
+			//console.log(patientData[i].username);
+			var item={
+			username:patientData[i].username
+			}
+			 data.push(item);
+		}
+		
+	}
+	console.log(data);
+res.json(data);
+});
+});
 });
 
 router.get('/logout', function(req, res,next) {

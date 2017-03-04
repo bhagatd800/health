@@ -142,11 +142,13 @@ $scope.symptom={
 };
 
 $scope.declineAppointment=function(datas){
-
+  if(confirm("request will be declined")){
   declineAppointments.postData(datas);
   getAppointments.getData().then(function(data){
   $scope.appointmentData= data;
+
 });
+}
 };
 
 $scope.getApprovedAppointment=function(){
@@ -252,13 +254,16 @@ return{
     headers: {
              'Content-Type': 'application/json'
     }
-}).then(function(docData){ //.success is deprecated,so use .then
+}).then(function(resp){
+    if(resp.data.errorcode==1){
     alert("Updated Successfully");
-})
-  .catch(function(err){//using .catch instead of .error as it is deprecated
-    console.log("Error in request =>", err)
-});
   }
+  if(resp.data.errorcode==0){
+    alert("some thing went wrong please try again");
+  }
+})
+
+}
 }
 }]);
 app.service("changePassword",['$http',function($http){

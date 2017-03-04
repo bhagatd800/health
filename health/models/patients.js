@@ -64,6 +64,7 @@ module.exports.getEntireData=function(callback){
 	patient.find(callback);
 }
 
+
 module.exports.delete=function(doc_id,callback){
 	patient.remove({ _id: doc_id }, callback);	
 	

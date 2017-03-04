@@ -97,7 +97,10 @@ module.exports.getEntireData=function(callback){
 	
 	doctor.find({status:1},callback);
 }
-
+module.exports.getDoctorUserName=function(callback){
+	
+	doctor.find(callback);
+}
 module.exports.delete=function(doc_id,callback){
 	doctor.remove({ _id: doc_id }, callback);	
 	

@@ -70,10 +70,12 @@ $scope.getAppointmentStatus=function(){
 
 };
 $scope.deleteAppointment=function(data){
+  if(confirm("Do u want to Delete?")){
   deleteAppointments.postData(data);
   getappointmentStatus.getData().then(function(data){
-    $scope.appointmentStatus=data;
+  $scope.appointmentStatus=data;
   });
+}
 };
 
 $scope.getHospitalData=function(){
@@ -99,8 +101,13 @@ return{
     headers: {
              'Content-Type': 'application/json'
     }
-}).then(function(datas){ //.success is deprecated,so use .then
-    alert("Request Send");
+}).then(function(resp){
+  if(resp.data.errorcode===0){
+    alert("some thing went wrong please try again");
+  }
+  if(resp.data.errorcode===1){
+    alert("Request Send Successfully");
+  }
 })
  
 

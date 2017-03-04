@@ -22,7 +22,7 @@ var storage = multer.diskStorage({ //multers disk storage settings
                     storage: storage
                 }).single('file');
     /** API path that will upload the files */
-    router.post('/upload', function(req, res) {
+router.post('/upload', function(req, res) {
        // console.log(req);
         upload(req,res,function(err){
             if(err){

@@ -1,4 +1,4 @@
-<div ng-app="register" ng-controller="registerController">
+<div ng-app="register" ng-controller="registerController" ng-init="getUser()">
 
 <div class="row">  
    <center>
@@ -14,15 +14,19 @@
         <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
             <label>Name</label>
             <input type="text" name="name" class="form-control" ng-model="user.name" required>
-            <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">You name is required.</p>
+            <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">Your name is required.</p>
         </div>
       
         <!-- USERNAME -->
         <div class="form-group" ng-class="{ 'has-error' : userForm.username.$invalid && !userForm.username.$pristine }">
             <label>Username</label>
-            <input type="text" name="username" class="form-control" ng-model="user.username" ng-minlength="5" ng-maxlength="8" required>
+            <input type="text" name="username" class="form-control" ng-model="user.username" ng-minlength="5" ng-maxlength="8" username-Available required>
             <p ng-show="userForm.username.$error.minlength" class="help-block">Username is too short.</p>
             <p ng-show="userForm.username.$error.maxlength" class="help-block">Username is too long.</p>
+            <p ng-if="userForm.usernameExists.$pending" class="help-block">
+               Checking Username...
+             </p>
+             <p ng-show="userForm.$error.usernameExists" class="help-block">username already exists</p>
         </div>
         
         <!-- EMAIL -->

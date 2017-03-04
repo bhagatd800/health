@@ -14,9 +14,12 @@ router.post('/reqAppointment',function(req,res) {
 								time:''};
 	//console.log(data);
 	Appointment.reqAppointment(data,function(err,callback){
+									if(err){
+										res.json({"errorcode":0});
+									}
 									if(callback)
 									{
-										req.flash('reqinfo', 'Appointment Request Send To');
+										res.json({"errorcode":1});
 									}
 								});
 });
