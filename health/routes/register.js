@@ -59,7 +59,7 @@ router.post('/register', function(req, res){
 	}
 });
 
-router.get('/getUser',function(req,res){
+router.post('/getUser',function(req,res){
 var data=[];
 Doctor.getDoctorUserName(function(err,user){
 
@@ -78,6 +78,7 @@ if(user){
 }
 
 Patient.getEntireData(function(err,user){
+var result;
 if(user){
 		var patientData=user;
 		//console.log(patientData);
@@ -88,11 +89,29 @@ if(user){
 			}
 			 data.push(item);
 		}
+
+
+		for(i=0;i<data.length;i++){
+			if(data[i].username===req.body.username)
+			{
+				var result=false;
+				break;
+			}
+			else{
+				var result=true;
+			}
+		
+		}
 		
 	}
-	console.log(data);
-res.json(data);
-});
+if(result==true){
+res.json(true);
+}
+if(result==false){
+res.json(false);
+}
+
+}); 
 });
 });
 

@@ -1,4 +1,4 @@
-<div ng-app="register" ng-controller="registerController" ng-init="getUser()">
+<div ng-app="register" ng-controller="registerController">
 
 <div class="row">  
    <center>
@@ -20,13 +20,9 @@
         <!-- USERNAME -->
         <div class="form-group" ng-class="{ 'has-error' : userForm.username.$invalid && !userForm.username.$pristine }">
             <label>Username</label>
-            <input type="text" name="username" class="form-control" ng-model="user.username" ng-minlength="5" ng-maxlength="8" username-Available required>
+            <input type="text" name="username" class="form-control" ng-model="user.username" ng-minlength="5"  username-Available ng-model-options="{ updateOn: 'blur' }" required>
             <p ng-show="userForm.username.$error.minlength" class="help-block">Username is too short.</p>
-            <p ng-show="userForm.username.$error.maxlength" class="help-block">Username is too long.</p>
-            <p ng-if="userForm.usernameExists.$pending" class="help-block">
-               Checking Username...
-             </p>
-             <p ng-show="userForm.$error.usernameExists" class="help-block">username already exists</p>
+            <p ng-show="userForm.username.$error.usernameExists" class="help-block">username already exists</p>
         </div>
         
         <!-- EMAIL -->
@@ -55,6 +51,8 @@
         <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Submit</button>
         
     </form>
+
+    {[{user}]}
   </div>
   <center>
   </br>
