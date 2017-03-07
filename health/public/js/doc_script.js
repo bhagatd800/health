@@ -4,7 +4,7 @@ app.config(function($interpolateProvider) {
   $interpolateProvider.endSymbol('}]}');
 });
 
-app.controller("tabController", ['$scope','getDatas','postDatas','changePassword','postSymptom','getResult','getAppointments','declineAppointments','setAppointments','getApprovedAppointments', function($scope,getDatas,postDatas,changePassword,postSymptom,getResult,getAppointments,declineAppointments,setAppointments,getApprovedAppointments)  {
+app.controller("tabController", ['$scope','getDatas','postDatas','changePassword','postSymptom','getResult','getAppointments','declineAppointments','setAppointments','getApprovedAppointments','checkPasswords', function($scope,getDatas,postDatas,changePassword,postSymptom,getResult,getAppointments,declineAppointments,setAppointments,getApprovedAppointments,checkPasswords)  {
 
 $scope.getDocData=function(){  
 getDatas.docData().then(function(data){
@@ -130,6 +130,7 @@ $scope.save=function(){
 };
 
 $scope.password={
+  'currentPassword':'',
   'password1':'',
   'password2':''
 };
@@ -156,13 +157,14 @@ $scope.getApprovedAppointment=function(){
   $scope.approvedAppointmentData= data;
 });
 
-
+$scope.disabled=false;
 }
 $scope.search=function(){
   $scope.disease="";
   if(($scope.symptom.sym1==$scope.symptom.sym2)||($scope.symptom.sym1==$scope.symptom.sym3)||($scope.symptom.sym1==$scope.symptom.sym4)||($scope.symptom.sym1==$scope.symptom.sym5)||($scope.symptom.sym2==$scope.symptom.sym3)||($scope.symptom.sym2==$scope.symptom.sym4)||($scope.symptom.sym2==$scope.symptom.sym5)||($scope.symptom.sym3==$scope.symptom.sym4)||($scope.symptom.sym3==$scope.symptom.sym5)||($scope.symptom.sym4==$scope.symptom.sym5)){
     alert("Enter Different Symptoms");
   }else{
+    $scope.disabled=true;
     postSymptom.postData($scope.symptom);
     getResult.getData().then(function(data){
     $scope.diseases=data;
@@ -170,10 +172,11 @@ $scope.search=function(){
     if($scope.diseases=="Sorry"){
 
       $scope.disease="Sorry no result Found";
-
+      $scope.disabled=false;
     }
     else{
       $scope.disease="Symptom shows "+" "+$scope.diseases.Disease+".";
+      $scope.disabled=false;
     }
 
    })
@@ -185,8 +188,15 @@ getAppointments.getData().then(function(data){
 });
 
 }
-
+$scope.checkPassword=function(){
+  //alert($scope.password.currentPassword);
+  checkPasswords.checkPassword($scope.password).then(function(data){
+    $scope.passwordStatus=data;
+    //alert($scope.passwordStatus);
+  })
+}
 $scope.change_password=function(){
+  if($scope.passwordStatus==1){
   if($scope.password.password1==$scope.password.password2)
 
   {
@@ -195,10 +205,10 @@ $scope.change_password=function(){
   }
   else
   {
-    alert("Password Doesnot Match");
+    $scope.passwordStatus=3;
   }
 }
-
+}
 }]);
 
 
@@ -382,3 +392,32 @@ return{
     
 }
 }]);
+
+
+app.service("checkPasswords",['$http',function($http){
+
+return{
+  checkPassword:function(data){
+
+    //alert(password.password1);
+  data=$http({
+    url: '/doctor/checkPassword',
+    method: "POST",
+    data: data,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+}).then(function(response){
+  if(response.data.errorCode===0){
+
+   // alert("not matched");
+    return response.data.errorCode;
+  }
+  if(response.data.errorCode===1){
+   // alert("matched");
+    return response.data.errorCode;
+  }
+})
+return data;
+}
+}}]);

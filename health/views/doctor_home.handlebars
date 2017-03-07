@@ -770,7 +770,7 @@
 						<option> deafness</option>
 					</select>
 					<center>
-					<button type="button" class="btn btn-primary btn-lg" ng-click="search()">Search</button>
+					<button type="button" class="btn btn-primary btn-lg" ng-click="search()" ng-disabled="disabled">Search</button>
 					</center>
 					<h4 style="color:green;padding:30px">{[{disease}]}</h4>
 				 </div>   
@@ -873,7 +873,12 @@
 
 					<form ng-submit="change_password()" >
 			   		<table style="width:38%">
-			   	
+			   		   		<tr>
+			   		   	
+			   			   		<td><label><div class="form-group">Current Password</div></label></td>
+			   			    	<td><div class="form-group"><input type="password" class="form-control" placeholder="Current Password" ng-model="password.currentPassword" ng-blur="checkPassword()"></div></td>
+			   		    		<p ng-if="passwordStatus==0" class="help-block" style="color:red">Incorrect Password</p>
+			   		   		 </tr>
 				   		<tr>
 				   	
 					   		<td><label><div class="form-group">Password</div></label></td>
@@ -887,7 +892,7 @@
 					    	<label><div class="form-group">Confirm Password</div></label>
 					    	</td>
 					    	<td><div class="form-group"><input type="text" class="form-control" placeholder="Confirm Password" ng-model="password.password2"></div></td>
-					  	
+					  		<p ng-if="passwordStatus==3" class="help-block" style="color:red">password does not match</p>
 			  			</tr>
 			  		</table>
 			  		<button type="submit" class="btn btn-default">Submit</button>

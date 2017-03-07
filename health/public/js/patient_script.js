@@ -4,9 +4,10 @@ app.config(function($interpolateProvider) {
   $interpolateProvider.endSymbol('}]}');
 });
 
-app.controller("patientController", ['$scope','changePassword','postSymptom','getResult','getDoctorDatas','reqAppointments','getappointmentStatus','deleteAppointments','getHospitalDatas', function($scope,changePassword,postSymptom,getResult,getDoctorDatas,reqAppointments,getappointmentStatus,deleteAppointments,getHospitalDatas)  {
+app.controller("patientController", ['$scope','changePassword','postSymptom','getResult','getDoctorDatas','reqAppointments','getappointmentStatus','deleteAppointments','getHospitalDatas','checkPasswords', function($scope,changePassword,postSymptom,getResult,getDoctorDatas,reqAppointments,getappointmentStatus,deleteAppointments,getHospitalDatas,checkPasswords)  {
 
 $scope.password={
+  'currentPassword':'',
   'password1':'',
   'password2':''
 };
@@ -25,11 +26,13 @@ $scope.getDoctorData= function(){
   //alert($scope.doctorData[0].name);
 });
 }
-
+$scope.disabled=false;
 $scope.search=function(){
+  $scope.disease="";
   if(($scope.symptom.sym1==$scope.symptom.sym2)||($scope.symptom.sym1==$scope.symptom.sym3)||($scope.symptom.sym1==$scope.symptom.sym4)||($scope.symptom.sym1==$scope.symptom.sym5)||($scope.symptom.sym2==$scope.symptom.sym3)||($scope.symptom.sym2==$scope.symptom.sym4)||($scope.symptom.sym2==$scope.symptom.sym5)||($scope.symptom.sym3==$scope.symptom.sym4)||($scope.symptom.sym3==$scope.symptom.sym5)||($scope.symptom.sym4==$scope.symptom.sym5)){
     alert("Enter Different Symptoms");
   }else{
+    $scope.disabled=true;
     postSymptom.postData($scope.symptom);
     getResult.getData().then(function(data){
     $scope.diseases=data;
@@ -37,16 +40,25 @@ $scope.search=function(){
     if($scope.diseases=="Sorry"){
 
       $scope.disease="Sorry no result Found. Look for Doctor or nearby Hospital";
+      $scope.disabled=false;
     }
     else{
       $scope.disease="Your Symptom shows you might have"+" "+$scope.diseases.Disease+"."+"You can aslo search for Doctor or Near by Hospital";
+      $scope.disabled=false;
     }
 
    })
 }
 }
-
+$scope.checkPassword=function(){
+  //alert($scope.password.currentPassword);
+  checkPasswords.checkPassword($scope.password).then(function(data){
+    $scope.passwordStatus=data;
+    //alert($scope.passwordStatus);
+  })
+}
 $scope.change_password=function(){
+  if($scope.passwordStatus==1){
   if($scope.password.password1==$scope.password.password2)
 
   {
@@ -55,10 +67,10 @@ $scope.change_password=function(){
   }
   else
   {
-    alert("Password Doesnot Match");
+    $scope.passwordStatus=3;
   }
 }
-
+}
 $scope.reqAppointment=function(data){
 
 reqAppointments.postData(data);
@@ -267,3 +279,32 @@ app.factory("getHospitalDatas",['$http',function($http){
     
 }
 }]);
+
+
+app.service("checkPasswords",['$http',function($http){
+
+return{
+  checkPassword:function(data){
+
+    //alert(password.password1);
+  data=$http({
+    url: '/patient/checkPassword',
+    method: "POST",
+    data: data,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+}).then(function(response){
+  if(response.data.errorCode===0){
+
+   // alert("not matched");
+    return response.data.errorCode;
+  }
+  if(response.data.errorCode===1){
+   // alert("matched");
+    return response.data.errorCode;
+  }
+})
+return data;
+}
+}}]);

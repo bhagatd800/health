@@ -215,5 +215,20 @@ Admin.createAdmin(newAdmin, function(err, user){
   });
 
 });
+router.post('/checkPassword', function(req, res) {
+//console.log(req.body.currentPassword);
+    Admin.comparePassword(req.body.currentPassword,req.session.admin.password,function(err,datas){
+    if(!datas){
+      //console.log("not matched");
+      res.json({"errorCode":0});
+    }
+else{
+  //console.log("matched");
+  res.json({"errorCode":1});
+}  
+  });
+
+  
+});
 
 module.exports = router;

@@ -82,5 +82,21 @@ router.get('/getHospitalData', function(req, res) {
   
 });
 
+router.post('/checkPassword', function(req, res) {
+//console.log(req.body.currentPassword);
+    Patient.comparePassword(req.body.currentPassword,req.session.patient.password,function(err,datas){
+    if(!datas){
+      //console.log("not matched");
+      res.json({"errorCode":0});
+    }
+else{
+  //console.log("matched");
+  res.json({"errorCode":1});
+}  
+  });
+
+  
+});
+
 
 module.exports = router;

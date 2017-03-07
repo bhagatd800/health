@@ -3,7 +3,7 @@ app.config(function($interpolateProvider) {
   $interpolateProvider.startSymbol('{[{');
   $interpolateProvider.endSymbol('}]}');
 });
-app.controller("adminController", ['$scope','Upload','getPatientDatas','deleteDoc','getDoctorDatas','deletePatients','changePassword','getNewDoctor','approveDoctor','uploadHospital', function($scope,Upload,getPatientDatas,deleteDoc,getDoctorDatas,deletePatients,changePassword,getNewDoctor,approveDoctor,uploadHospital)  {
+app.controller("adminController", ['$scope','Upload','getPatientDatas','deleteDoc','getDoctorDatas','deletePatients','changePassword','getNewDoctor','approveDoctor','uploadHospital','checkPasswords', function($scope,Upload,getPatientDatas,deleteDoc,getDoctorDatas,deletePatients,changePassword,getNewDoctor,approveDoctor,uploadHospital,checkPasswords)  {
 
 $scope.hospitalData={
 
@@ -116,10 +116,20 @@ $scope.getDoctorData= function(){
 }
 }
 $scope.password={
+  'currentPassword':'',
   'password1':'',
   'password2':''
 };
+$scope.checkPassword=function(){
+  //alert($scope.password.currentPassword);
+  checkPasswords.checkPassword($scope.password).then(function(data){
+    $scope.passwordStatus=data;
+    //alert($scope.passwordStatus);
+  })
+}
+
 $scope.change_password=function(){
+  if($scope.passwordStatus==1){
    if($scope.password.password1==$scope.password.password2)
 
   {
@@ -128,12 +138,11 @@ $scope.change_password=function(){
   }
   else
   {
-    alert("Password Doesnot Match");
+    $scope.passwordStatus=3;
   }
 
 }
-
-
+}
 
 }]);
 
@@ -312,3 +321,31 @@ return{
 
 }}
 ]);
+
+app.service("checkPasswords",['$http',function($http){
+
+return{
+  checkPassword:function(data){
+
+    //alert(password.password1);
+  data=$http({
+    url: '/admin/checkPassword',
+    method: "POST",
+    data: data,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+}).then(function(response){
+  if(response.data.errorCode===0){
+
+   // alert("not matched");
+    return response.data.errorCode;
+  }
+  if(response.data.errorCode===1){
+   // alert("matched");
+    return response.data.errorCode;
+  }
+})
+return data;
+}
+}}]);
