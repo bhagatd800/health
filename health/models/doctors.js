@@ -52,7 +52,7 @@ module.exports.createDoctor = function(newDoctor, callback){
 }
 
 module.exports.getDoctorByUsername = function(username, callback){
-	//console.log(username);
+	console.log(username);
 	var query = {username: username,status:1};
 	doctor.findOne(query, callback);
 	
@@ -103,5 +103,21 @@ module.exports.getDoctorUserName=function(callback){
 }
 module.exports.delete=function(doc_id,callback){
 	doctor.remove({ _id: doc_id }, callback);	
+	
+
+}
+module.exports.getEntireData=function(callback){
+	
+	doctor.find(callback);
+}
+
+module.exports.setNewPassword=function(email,password,callback){
+
+	bcrypt.genSalt(10, function(err, salt) {
+	    bcrypt.hash(password, salt, function(err, hash) {
+	        password = hash;
+	        doctor.update({ email: email }, { $set: { password: password }}, callback);
+	    });
+	});
 	
 }

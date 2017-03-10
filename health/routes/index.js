@@ -1,5 +1,7 @@
+
 var express = require('express');
 var router = express.Router();
+var randomstring = require("randomstring");
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -22,6 +24,10 @@ router.get('/admin',function(req,res){
   else
   res.render('admin_login');
 });
+
+
+
+
 
 
 module.exports = router;

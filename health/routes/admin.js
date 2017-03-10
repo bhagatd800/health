@@ -158,7 +158,7 @@ router.post('/update_password',function(req,res){
       console.log('error');
     }
     else{
-      //res.redirect('/doctor/login');
+      res.json('abc');
     }
 
   })

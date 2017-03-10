@@ -69,3 +69,13 @@ module.exports.delete=function(doc_id,callback){
 	patient.remove({ _id: doc_id }, callback);	
 	
 }
+module.exports.setNewPassword=function(email,password,callback){
+
+	bcrypt.genSalt(10, function(err, salt) {
+	    bcrypt.hash(password, salt, function(err, hash) {
+	        password = hash;
+	        patient.update({ email: email }, { $set: { password: password }}, callback);
+	    });
+	});
+	
+}

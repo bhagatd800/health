@@ -107,7 +107,7 @@
 					  <thead class="thead-inverse">
 					    <tr>
 					      <th>Patient Name</th>
-					  	  <th>Doctor Name</th>
+					  	  
 					  	  <th>Status</th>
 					  	  <th>Date</th>
 					  	  <th>Time</th>
@@ -116,7 +116,7 @@
 					<tbody>
 				      <tr ng-repeat="data in approvedAppointmentData |filter:searchDoctor">
 				        <td>{[{data.patientName}]}</td>
-				        <td>{[{data.doctorName}]}</td>
+				        
 				        <td style="color: green">{[{data.status}]}</td>
 				        <td>{[{data.date}]}</td>
 				        <td>{[{data.time}]}</td>
