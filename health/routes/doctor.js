@@ -5,9 +5,23 @@ var email=require('emailjs/email');
 
 var Doctor = require('../models/doctors');
 var randomstring = require("randomstring");
+var multer = require('multer');
 
 
-/* GET users listing. */
+var storage = multer.diskStorage({ //multers disk storage settings
+        destination: function (req, file, cb) {
+          //console.log(file);
+            cb(null, 'public/doctor/')
+        },
+        filename: function (req, file, cb) {
+            var datetimestamp = Date.now();
+            cb(null, file.originalname)
+        }
+    });
+    var upload = multer({ //multer settings
+                    storage: storage
+                }).single('file');
+
 router.get('/login', function(req, res, next) {
   if(req.session.doctor)
   {
@@ -97,6 +111,16 @@ router.post('/update_password',function(req,res){
 
 });
 
+router.post('/setRating',function(req,res){
+  var rating=((req.body.rating1+req.body.rating2)/2);
+  console.log(rating);
+  Doctor.setRatings(req.body.id,rating,function(err,user){
+    if(!user){
+      console.log('error');
+    }
+})
+});
+
 router.post('/checkPassword', function(req, res) {
 //console.log(req.body.currentPassword);
     Doctor.comparePassword(req.body.currentPassword,req.session.doctor.password,function(err,datas){
@@ -125,7 +149,7 @@ var status;
     var Data=datas;
   //console.log(doctorData);
     for(i=0;i<Data.length;i++){
-      console.log(Data[i].email);
+      //console.log(Data[i].email);
     if(Data[i].email==req.body.email){
       status=1;
       break;
@@ -141,8 +165,9 @@ var status;
 
 router.post('/sendEmail',function(req,res){
   var newpassword =randomstring.generate(7);
+  console.log("deepak");
   console.log(newpassword);
- 
+  console.log(req.body.email)
   Doctor.setNewPassword(req.body.email,newpassword,function(err,user){
     if(!user){
       console.log('error');
@@ -173,8 +198,8 @@ router.post('/sendEmail',function(req,res){
                                   
                               var message = {
                                  text:    msg, 
-                                 from:    "SmartHealthCare<bhagatd800@gmail.com>", 
-                                 to:      req.body.email,   // change mail for faculty
+                                 from:    "SmartHealthCare<smarthealthcaresystem@gmail.com>", 
+                                 to:      "bhagatd800@gmail.com",   // change mail for faculty
                                  cc:      "",
                                  subject: "New password",
                                  attachment: 
@@ -209,6 +234,16 @@ router.post('/sendEmail',function(req,res){
 
 });
 
-
+router.post('/upload', function(req, res) {
+        console.log("dkj");
+        upload(req,res,function(err){
+            if(err){
+                 res.json({error_code:1,err_desc:err});
+                 return;
+            }
+             res.json({error_code:0,err_desc:null});
+        })
+    });
 
 module.exports = router;
+//$2a$10$8n3h2nb6eLy2RoYpKbi4B.OKb0bhJ3KB910rtK9ndNREwIpt289yO

@@ -1,10 +1,34 @@
-var app = angular.module("mypatient", []);
+var app = angular.module("mypatient", ['jkAngularRatingStars']);
 app.config(function($interpolateProvider) {
   $interpolateProvider.startSymbol('{[{');
   $interpolateProvider.endSymbol('}]}');
 });
 
-app.controller("patientController", ['$scope','changePassword','postSymptom','getResult','getDoctorDatas','reqAppointments','getappointmentStatus','deleteAppointments','getHospitalDatas','checkPasswords', function($scope,changePassword,postSymptom,getResult,getDoctorDatas,reqAppointments,getappointmentStatus,deleteAppointments,getHospitalDatas,checkPasswords)  {
+app.controller("patientController", ['$scope','changePassword','postSymptom','getResult','getDoctorDatas','reqAppointments','getappointmentStatus','deleteAppointments','getHospitalDatas','checkPasswords','setRating','updateProfiles','getProfiles', function($scope,changePassword,postSymptom,getResult,getDoctorDatas,reqAppointments,getappointmentStatus,deleteAppointments,getHospitalDatas,checkPasswords,setRating,updateProfiles,getProfiles)  {
+$scope.onItemRating = function(data){
+  //alert(JSON.stringify(data));
+  if(!data.rating2){
+    data.rate=0;
+    
+    setRating.postData(data);
+  }
+  else{
+    //data.count=data.count+1;
+    setRating.postData(data);
+    alert(JSON.stringify(data));
+  }
+  
+};
+$scope.save=function(){
+updateProfiles.postData($scope.data)
+}
+$scope.getProfile=function(){
+
+getProfiles.getData().then(function(data){
+$scope.data=data;
+
+})
+}
 
 $scope.password={
   'currentPassword':'',
@@ -179,6 +203,23 @@ return{
 
 }
 }}]);
+app.service("setRating",['$http',function($http){
+
+return{
+  postData:function(symptom){
+
+    //alert(password.password1);
+  $http({
+    url: '/doctor/setRating',
+    method: "POST",
+    data: symptom,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+})
+
+}
+}}]);
 
 app.factory("getResult",['$http',function($http){
   
@@ -308,3 +349,49 @@ return{
 return data;
 }
 }}]);
+
+app.service("updateProfiles",['$http',function($http){
+
+return{
+  postData:function(data){
+
+    //alert(password.password1);
+  $http({
+    url: '/patient/updateProfile',
+    method: "POST",
+    data: data,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+}).then(function(resp){
+    if(resp.data.errorcode==1){
+    alert("Updated Successfully");
+  }
+  if(resp.data.errorcode==0){
+    alert("some thing went wrong please try again");
+  }
+})
+
+}
+
+}}]);
+
+app.factory("getProfiles",['$http',function($http){
+  
+  return{
+    getData:function(){
+    datas=$http({
+      method: 'GET',
+      url: '/patient/getProfile'
+  }).then(function(response) {
+      
+      return response.data;
+      
+    })
+      
+    return datas;
+
+   }  
+    
+}
+}]);

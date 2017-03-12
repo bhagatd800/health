@@ -13,11 +13,23 @@ var PatientSchema = mongoose.Schema({
 	email: {
 		type: String
 	},
+	contact:{
+		type:String
+	},
 	name: {
 		type: String
 	},
 	user_type:{
 		type:String
+	},
+	gender:{
+		type:String
+	},
+	condition: {
+		type: String
+	},
+	age:{
+		type:Number
 	}
 });
 
@@ -74,8 +86,17 @@ module.exports.setNewPassword=function(email,password,callback){
 	bcrypt.genSalt(10, function(err, salt) {
 	    bcrypt.hash(password, salt, function(err, hash) {
 	        password = hash;
-	        patient.update({ email: email }, { $set: { password: password }}, callback);
+	        patient.update({ "email": email }, { $set: { "password": password }}, callback);
 	    });
 	});
 	
+}
+
+module.exports.updateProfile=function(user_id,profile,callback){
+	patient.update({ _id: user_id }, profile, callback);	
+}
+
+module.exports.getProfiles=function(user_id,callback){
+	var query={_id:user_id};
+	patient.findOne(query,callback);
 }

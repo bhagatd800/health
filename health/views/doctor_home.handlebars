@@ -19,9 +19,9 @@
 			<div id="home" class="tab-pane fade in active">
 			  <center>
 				<h2 class="page-header" style="color:red">New Appointment Request</h2>
-			      <div class="w3-card-12" style="width:60%;padding:20px;margin:30px">
+			      <div class="w3-card-12" style="width:80%;padding:20px;margin:30px">
 					<div class="input-group" style="width:50%">
-			      		<input type="text" class="form-control" placeholder="Search" ng-model="searchDoctor">
+			      		<input type="text" class="form-control" placeholder="Search" ng-model="searchApp">
 				      	<div class="input-group-btn">
 				        	<button class="btn btn-default" disabled="disabled"><i class="glyphicon glyphicon-search"></i></button>
 				     	</div>
@@ -32,18 +32,22 @@
 					  <thead class="thead-inverse">
 					    <tr>
 					      <th>Name</th>
+					      <th>Age</th>
+					      <th>Medical Condition</th>
 					  	  <th>Action</th>
 						</tr>
 					  </thead>
 					<tbody>
-				      <tr ng-repeat="data in appointmentData |filter:searchDoctor">
+				      <tr ng-repeat="data in appointmentData |filter:searchApp">
 				        <td>{[{data.patientName}]}</td>
+				        <td>{[{data.age}]}</td>
+				        <td>{[{data.condition}]}</td>
 				        <td>
 				        	<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" ng-click="setAppointmentId(data._id)">Accept</button>
 				      		<button type="button" class="btn btn-danger" ng-click="declineAppointment(data)">Decline</button>
 				      	</td>
 				      </tr>
-				      
+				      <p ng-show="(appointmentData | filter:searchApp).length == 0" style="color:red">Data Not Available!</p>
 				    </tbody>
 				  </table>
 				  </div>
@@ -96,7 +100,7 @@
 				<h2 class="page-header" style="color:red">Approved Appointments</h2>
 			      <div class="w3-card-12" style="width:80%;padding:20px;margin:30px">
 					<div class="input-group" style="width:50%">
-			      		<input type="text" class="form-control" placeholder="Search" ng-model="searchDoctor">
+			      		<input type="text" class="form-control" placeholder="Search" ng-model="searchAppointment">
 				      	<div class="input-group-btn">
 				        	<button class="btn btn-default" disabled="disabled"><i class="glyphicon glyphicon-search"></i></button>
 				     	</div>
@@ -107,22 +111,24 @@
 					  <thead class="thead-inverse">
 					    <tr>
 					      <th>Patient Name</th>
-					  	  
+					  	  <th>Medical Condition</th>
+					  	  <th>Age</th>
 					  	  <th>Status</th>
 					  	  <th>Date</th>
 					  	  <th>Time</th>
 						</tr>
 					  </thead>
 					<tbody>
-				      <tr ng-repeat="data in approvedAppointmentData |filter:searchDoctor">
+				      <tr ng-repeat="data in approvedAppointmentData |filter:searchAppointment">
 				        <td>{[{data.patientName}]}</td>
-				        
+				        <td>{[{data.condition}]}</td>
+				        <td>{[{data.age}]}</td>
 				        <td style="color: green">{[{data.status}]}</td>
 				        <td>{[{data.date}]}</td>
 				        <td>{[{data.time}]}</td>
 				      
 				      </tr>
-				      
+				     <p ng-show="(approvedAppointmentData | filter:searchAppointment).length == 0" style="color:red">Data Not Available!</p> 
 				    </tbody>
 				  </table>
 				  </div>
@@ -142,7 +148,7 @@
 			    
   
 				 <label style="padding-left:80px;padding-bottom:25px;padding-top:45px"><div class="form-group">Symptom 1:</div></label>
-					  <select class="selectpicker" data-live-search="true" name="sym1" ng-model="symptom.sym1">
+					  <select class="selectpicker" data-live-search="true" data-size="10" name="sym1" ng-model="symptom.sym1">
 					  <option></option>
 					  <option>headache</option>
 						<option>fever </option>
@@ -268,7 +274,7 @@
 					</select>
 					
 					<label style="padding-left:90px"><div class="form-group">Symptom 2:</div></label>
-					<select class="selectpicker" data-live-search="true" name="sym2" ng-model="symptom.sym2">
+					<select class="selectpicker" data-live-search="true" data-size="10" name="sym2" ng-model="symptom.sym2">
 					<option></option>
 					  <option>headache</option>
 						<option>fever </option>
@@ -395,7 +401,7 @@
 					
 					</br>
 					<label style="padding-left:80px;padding-bottom:25px;padding-top:25px"><div class="form-group">Symptom 3:</div></label>
-					<select class="selectpicker" data-live-search="true" name="sym3" ng-model="symptom.sym3">
+					<select class="selectpicker" data-live-search="true" data-size="10" name="sym3" ng-model="symptom.sym3">
 					  <option></option>
 					  <option>headache</option>
 					<option>fever </option>
@@ -520,7 +526,7 @@
 					<option> deafness</option>
 					</select>
 					<label style="padding-left:90px"><div class="form-group">Symptom 4:</div></label>
-					<select class="selectpicker" data-live-search="true" name="sym4" ng-model="symptom.sym4">
+					<select class="selectpicker" data-live-search="true" data-size="10" name="sym4" ng-model="symptom.sym4">
 					 <option></option>
 					 <option>headache</option>
 						<option>fever </option>
@@ -645,7 +651,7 @@
 						<option> deafness</option>
 					</select>
 					<label style="padding-left:80px;padding-bottom:25px;padding-top:25px"><div class="form-group">Symptom 5:</div></label>
-					<select class="selectpicker" data-live-search="true" name="sym5" ng-model="symptom.sym5">
+					<select class="selectpicker" data-live-search="true" data-size="10" name="sym5" ng-model="symptom.sym5">
 					  <option></option>
 					  <option>headache</option>
 						<option>fever </option>
@@ -796,31 +802,60 @@
 			   	
 				   		<tr>
 				   	
-					   		<td><label><div class="form-group">NAME</div></label></td>
-					    	<td><div class="form-group"><input type="text" class="form-control"  name="name" placeholder="Name" ng-model="data.name"></div></td>
+					   		<td><label><div class="form-group">Name</div></label></td>
+					    	<td><div class="form-group"><input type="text" class="form-control"  name="name" placeholder="Name" ng-model="data.name" disabled="disabled"></div></td>
 				    
 				   		 </tr>
 				  	
 				  		<tr>
 			  	
 					    	<td>
-					    	<label><div class="form-group">USERNAME</div></label>
+					    	<label><div class="form-group">Username</div></label>
 					    	</td>
-					    	<td><div class="form-group"><input type="text" class="form-control" placeholder="Username" ng-model="data.username" name="username"></div></td>
+					    	<td><div class="form-group"><input type="text" class="form-control" placeholder="Username" ng-model="data.username" name="username" disabled="disabled"></div></td>
 					  	
 			  			</tr>
 			  			<tr>
 				
-						    <td><label><div class="form-group">EMAIL</label></div></td>
-						    <td><div class="form-group"><input type="email" class="form-control" placeholder="Email" ng-model="data.email" name="email"></div><td>
+						    <td><label><div class="form-group">Email</label></div></td>
+						    <td><div class="form-group"><input type="email" class="form-control" placeholder="Email" ng-model="data.email" name="email" disabled="disabled"></div><td>
 						  	
 					  	</tr>
+					  	<tr>
+				
+						    <td><label><div class="form-group">Reg No.</label></div></td>
+						    <td><div class="form-group"><input type="string" class="form-control" placeholder="goverment registration no." ng-model="data.regno" name="regnp" disabled="disabled" ></div><td>
+						  	
+					  	</tr>
+
+					  	 <tr>
+
+					  	  	
+					  		 <td><div class="form-group"><label>Certificate</div></td>
+					  			<td><div class="form-group">
+					  				
+					  			<input  
+					  				    type="file"
+					  				   	ngf-select
+					  				    ng-model="file"
+					  				   	ngfName={[{data.username}]}
+					  				    name="file"
+					  				    ngf-pattern="'image/*'"
+					  				   	accept="image/*"
+					  				    ngf-max-size="20MB"
+					  				/>
+
+
+					  			</div></td>
+					  		</div>
+					  	 </tr>
 
 					  	<tr>
 					  	<td><label>Gender</label></td>
 					  	<td>
-					  		<div class="form-group" style="width:160%">
-					  		<select class="selectpicker" name="user_gender" >
+					  		<div class="form-group">
+					  		<select class="selectpicker" name="user_gender" data-width="290px" ng-model="data.gender">
+					  		<option></option>
 				  			<option value="Male">MALE</option>
 				  			<option value="Female">FEMALE</option>
 				  			</select>
@@ -829,33 +864,71 @@
 			  			<tr>
 
 			 	
-						    <td><div class="form-group"><label>SPECIALTY</label></div></td>
-						    <td><div class="form-group"><input type="text" class="form-control" placeholder="Specialty" name="specialty"
-						    ng-model="data.specialty"></div></td>
+						    <td><div class="form-group"><label>Specialty</label></div></td>
+						    <td><div class="form-group"><select class="selectpicker" data-live-search="true" data-width="290px" data-size='5' ng-model="data.specialty">
+						    	<option>{[{data.specialty}]}</option>
+						    	<option>cardiologists</option>
+ 								 <option>endocrinology</option>
+  								 
+  								 <option>multi specialists</option>
+  								 <option>pulmonologist</option>
+  								 <option>neurologists</option>
+  								 <option>general physician</option>
+  								 <option>gastroenterologist</option>
+  								 <option>otolaryngologist</option>
+  								 <option>gynecologist</option>
+  								 <option>obstetrician</option>
+  								 <option>pediatrician</option>
+  								 <option>urologist</option>
+  								 <option>rheumatologist</option>
+  								
+								</select></div>
+							</td>
 					  	
 			  	
 			  			</tr>
 			  			<tr>
 
 			  	
-						    <td><div class="form-group"><label>LOCATION</label></div></td>
+						    <td><div class="form-group"><label>Location</label></div></td>
 						    <td><div class="form-group"><input type="text" class="form-control" placeholder="Location" name="location"
 						    ng-model="data.location"></div></td>
 						  	</div>
 			  			</tr>
+			  			
+
+
+
+
 			  			<tr>
 
 			  	
-						    <td><div class="form-group"><label>NATIONALITY</label></div></td>
+						    <td><div class="form-group"><label>Nationality</label></div></td>
 						    <td><div class="form-group"><input type="text" class="form-control" placeholder="Nationality" name="nationality" ng-model="data.nationality"></div></td>
 						  	</div>
 			  			</tr>
 			  			<tr>
 
 			  	
-						    <td><div class="form-group"><label>QUALIFICATION</label></div></td>
-						    <td><div class="form-group"><textarea class="form-control" rows="5" name="qualification" ng-model="data.qualification"></textarea></div></td>
-						  	</div>
+						    <td><div class="form-group"><label>Qualification</label></div></td>
+						    <td><div class="form-group"><select class="selectpicker" data-live-search="true" data-width="290px" data-size="8" ng-model="data.qualification">
+						    	<option></option>
+ 								<option>Doctor of Medicine (MD, Dr.MuD, Dr.Med)</option>
+  								<option>Doctor of Osteopathic Medicine </option>
+  								<option>Bachelor of Medicine, Bachelor of Surgery (MBBS, BMBS, MBChB, MBBCh)</option>
+  								<option>Master of Clinical Medicine(MCM)</option>
+  								<option>Master of Medical Science(MMSc, MMedSc)</option>
+  								<option>Master of Medicine(MM, MMed)</option>
+  								<option>Master of Philosophy(MPhil)</option>
+  								<option>Master of Surgery(MS, MSurg, MChir, MCh, ChM, CM)</option>
+  								<option>Master of Science in Medicine or Surgery (MSc)</option>
+  								<option>Doctor of Clinical Medicine (DCM)</option>
+  								<option>Doctor of Clinical Surgery (DClinSurg)</option>
+  								<option>Doctor of Medical Science (DMSc, DMedSc)</option>
+  								<option>Doctor of Philosophy (PhD, DPhil)</option>
+  								<option>Doctor of Surgery (DS, DSurg)</option>
+								</select></div>
+							</td>
 			  			</tr>
 			  			</table>
 						  <button type="submit" class="btn btn-default">Submit</button>

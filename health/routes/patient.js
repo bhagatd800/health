@@ -197,4 +197,32 @@ router.post('/sendEmail',function(req,res){
 });  
 
 
+router.post('/updateProfile',function(req,res){
+  Patient.updateProfile(req.session.patient._id,req.body, function(err,user){
+    if(err){
+      res.json({"errorcode":0})
+    }
+    else{
+      res.json({"errorcode":1})
+    }
+
+  })
+  
+});
+
+
+router.get('/getProfile', function(req, res) {
+
+    Patient.getProfiles(req.session.patient._id,function(err,datas){
+    if(err){
+
+    }
+  
+    res.json(datas);
+  });
+
+  
+});
+
+
 module.exports = router;

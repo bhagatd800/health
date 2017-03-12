@@ -10,6 +10,7 @@
 			
 			<li><a data-toggle="tab" href="#manage_doctor" ng-click="getDoctorData()">Manage Doctor </a></li>
 			<li><a data-toggle="tab" href="#manage_patient" ng-click="getPatientData()">Manage Patient </a></li>
+			<li><a data-toggle="tab" href="#manage_hospital" ng-click="getHospitalData()">Manage Hospital </a></li>
 			<li><a data-toggle="tab" href="#upload_hospital" >Upload Hospital </a></li>
 			<li><a data-toggle="tab" href="#change_password">Change Password </a></li>
 			</ul>
@@ -47,7 +48,7 @@
 				        <td><button type="button" class="btn btn-success" ng-click="approve(data)">Approve</button>
 				      <button type="button" class="btn btn-danger" ng-click="deleteNewDoctor(data)">Delete</button></td>
 				      </tr>
-				      
+				      <p ng-show="(newDoctor | filter:searchDoctor).length == 0" style="color:red">Data Not Available!</p>
 				    </tbody>
 				  </table>
 				</center>
@@ -76,29 +77,26 @@
 				  <table class="table table-striped">
 					  <thead class="thead-inverse">
 					    <tr>
-					      <th>Name</th>
+					     
 					      <th>Username</th>
 					      <th>Email</th>
 					      <th>Location</th>
-					      <th>Nationality</th>
-					      <th>Specialty</th>
-					      <th>Qualification</th>
+					      
+					      <th>Rating</th>
 					      <th>Action</th>
 
 					    </tr>
 					  </thead>
 					<tbody>
 				      <tr ng-repeat="data in doctorData |filter:searchDoctor">
-				        <td>{[{data.name}]}</td>
+				        
 				        <td>{[{data.username}]}</td>
 				        <td>{[{data.email}]}</td>
 				        <td>{[{data.location}]}</td>
-				        <td>{[{data.nationality}]}</td>
-				        <td>{[{data.specialty}]}</td>
-				        <td>{[{data.qualification}]}</td>
+				        <td><jk-rating-stars rating="data.rating" read-only="true" style="color:red" ></jk-rating-stars></td>
 				        <td><button type="button" class="btn btn-danger" ng-click="deleteDoctor(data)">DELETE</button></td>
 				      </tr>
-				      
+				      <p ng-show="(doctorData | filter:searchDoctor).length == 0" style="color:red">Data Not Available!</p>
 				    </tbody>
 				  </table>
 				</center>
@@ -141,7 +139,7 @@
 				        <td>{[{data.email}]}</td>
 				        <td><button type="button" class="btn btn-danger" ng-click="deletePatient(data)">DELETE</button></td>
 				      </tr>
-				      
+				      <p ng-show="(patientData | filter:searchPatient).length == 0" style="color:red">Data Not Available!</p>
 				    </tbody>
 				  </table>
 				</center>
@@ -149,6 +147,51 @@
 				
 
 				</div>
+				<div id="manage_hospital" class="tab-pane fade">
+
+				 <center>
+
+			        <h2 class="page-header" style="color:red">Manage Hospital</h2>
+			        </center>
+			        <div class="w3-card-4" style="width:95%;padding:20px;margin:30px">
+			        
+			     
+			       <div class="input-group" style="width:40%">
+			      <input type="text" class="form-control" placeholder="Search" ng-model="searchHospital">
+			      <div class="input-group-btn">
+			        <button class="btn btn-default" disabled="disabled"><i class="glyphicon glyphicon-search"></i></button>
+			      </div>
+			    </div>
+			    </br>
+			    <center>
+				  <table class="table table-striped">
+					  <thead class="thead-inverse">
+					    <tr>
+					      <th>Name</th>
+					      <th>City</th>
+					      <th>Specialty</th>
+					      <th>Action</th>
+
+					    </tr>
+					  </thead>
+					<tbody>
+				      <tr ng-repeat="data in hospital | filter:searchHospital">
+				        <td>{[{data.name}]}</td>
+				        <td>{[{data.city}]}</td>
+				        <td>{[{data.specialty}]}</td>
+				        <td><button type="button" class="btn btn-danger" ng-click="deleteHospital(data)">DELETE</button></td>
+				      </tr>
+				      <p ng-show="(hospital | filter:searchHospital).length == 0" style="color:red">Data Not Available!</p>
+				    </tbody>
+				  </table>
+				</center>
+				</div>
+
+
+
+				</div>
+
+
 				 <div id="upload_hospital" class="tab-pane fade">
 			 
 				 <div class="row">

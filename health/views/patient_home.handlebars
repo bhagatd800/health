@@ -13,9 +13,10 @@
 			<li><a data-toggle="tab" href="#search">Search Disease</a></li>
 			<li><a data-toggle="tab" href="#searchdoctor" ng-click="getDoctorData()">Search Doctor</a></li>
 			<li><a data-toggle="tab" href="#search_hospital" ng-click="getHospitalData()">Search Hospitals</a></li>
+			<li><a data-toggle="tab" href="#profile" ng-click="getProfile()">Your Profile</a></li>
 			<li><a data-toggle="tab" href="#change_password">Change Password</a></li>
 			</ul>
-			<div class="tab-content">
+			<div class="tab-content" style="overflow-x:scroll">
 			<div id="home" class="tab-pane fade in active">
 			  <center>
 
@@ -24,7 +25,7 @@
 			     <div class="w3-card-12" style="width:80%;padding:20px;margin:30px">
 
 			       <div class="input-group" style="width:30%">
-			      <input type="text" class="form-control" placeholder="Search" ng-model="searchDoctor">
+			      <input type="text" class="form-control" placeholder="Search" ng-model="searchApp">
 			      <div class="input-group-btn">
 			        <button class="btn btn-default" disabled="disabled"><i class="glyphicon glyphicon-search"></i></button>
 			      </div>
@@ -44,7 +45,7 @@
 					    </tr>
 					  </thead>
 					<tbody>
-				      <tr ng-repeat="data in appointmentStatus |filter:searchDoctor">
+				      <tr ng-repeat="data in appointmentStatus |filter:searchApp">
 				        <td>{[{data.patientName}]}</td>
 				        <td>{[{data.doctorName}]}</td>
 				        <td style="color:green">{[{data.status}]}</td>
@@ -53,11 +54,16 @@
 				        <td><button type="button" class="btn btn-danger" ng-click="deleteAppointment(data)">Delete</button>
 				     
 				      </tr>
-				      
+				      <p ng-show="(appointmentStatus | filter:searchApp).length == 0" style="color:red">Data Not Available!</p>
+
 				    </tbody>
 				  </table>
+
 				</center>
-			</div>
+				 <div layout="column">
+     
+	</div>
+	</div>
 			
 			<div id="search" class="tab-pane fade">
 			<div class="row">
@@ -72,7 +78,7 @@
 					  <select class="selectpicker" data-live-search="true" name="sym1" ng-model="symptom.sym1">
 					  <option></option>
 					  <option>headache</option>
-						<option>fever </option>
+						<option>fever</option>
 						<option>loss of appetite</option>
 						<option>red color rashes</option>
 						<option>scabs</option>
@@ -198,7 +204,7 @@
 					<select class="selectpicker" data-live-search="true" name="sym2" ng-model="symptom.sym2">
 					 <option></option>
 					  <option>headache</option>
-						<option>fever </option>
+						<option>fever</option>
 						<option>loss of appetite</option>
 						<option>red color rashes</option>
 						<option>scabs</option>
@@ -325,7 +331,7 @@
 					<select class="selectpicker" data-live-search="true" name="sym3" ng-model="symptom.sym3">
 					  <option></option>
 					  <option>headache</option>
-					<option>fever </option>
+					<option>fever</option>
 					<option>loss of appetite</option>
 					<option>red color rashes</option>
 					<option>scabs</option>
@@ -450,7 +456,7 @@
 					<select class="selectpicker" data-live-search="true" name="sym4" ng-model="symptom.sym4">
 					 <option></option>
 					 <option>headache</option>
-						<option>fever </option>
+						<option>fever</option>
 						<option>loss of appetite</option>
 						<option>red color rashes</option>
 						<option>scabs</option>
@@ -575,7 +581,7 @@
 					<select class="selectpicker" data-live-search="true" name="sym5" ng-model="symptom.sym5">
 					  <option></option>
 					  <option>headache</option>
-						<option>fever </option>
+						<option>fever</option>
 						<option>loss of appetite</option>
 						<option>red color rashes</option>
 						<option>scabs</option>
@@ -737,10 +743,9 @@
 					  <thead class="thead-inverse">
 					    <tr>
 					      <th>Name</th>
-					      <th>Email</th>
 					      <th>Location</th>
 					      <th>Specialty</th>
-					      <th>Qualification</th>
+					      <th>Your Rating</th>
 					      <th>Action</th>
 
 					    </tr>
@@ -748,20 +753,36 @@
 					<tbody>
 				      <tr ng-repeat="data in doctorData |filter:searchDoctor">
 				        <td>{[{data.name}]}</td>
-				        <td>{[{data.email}]}</td>
 				        <td>{[{data.location}]}</td>
 				        <td>{[{data.specialty}]}</td>
-				        <td>{[{data.qualification}]}</td>
+				        <td><jk-rating-stars rating="data.rating" on-rating="onItemRating({'id':data._id,'rating1':rating, 'rating2':data.count})" ></jk-rating-stars></td>
 				        <td><button type="button" class="btn btn-success" ng-click="reqAppointment(data)">Request Appointment</button></td>
 				      </tr>
-				      
+				      <p ng-show="(doctorData | filter:searchDoctor).length == 0" style="color:red">Data Not Available!</p>
+
 				    </tbody>
 				  </table>
 				</center>
 				</div>
 				</div>
 
-			
+			<div class="modal fade" id="myModal" role="dialog">
+				    <div class="modal-dialog">
+				      <div class="modal-content">
+				        <div class="modal-header" style="background-color:green">
+				          <button type="button" class="close" data-dismiss="modal">&times;</button>
+				          <center> <h4 class="modal-title">Doctor Rating</h4></center>
+				        </div>
+				        <div class="modal-body">
+					        <jk-rating-stars rating="firstRate" on-rating="onItemRating(rating)" ></jk-rating-stars>
+				        	<div class="modal-footer">
+				         		 <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+				        	</div>
+				      </div>
+				      
+				    </div>
+				  </div>
+				  </div>
 
 
 			</div>
@@ -814,20 +835,85 @@
 			     		<tr>
 			     		<td style="padding-bottom: 10px;"><strong>Address:</strong></td><td style="padding-bottom: 10px;">{[{data.address}]}</td>
 			     		</table>
+
 			     		</div>
+
 
 			     	</div>
 			     	</div>
-			     	
-			     	
-			
+			     	<br>
+			     	<center>
+			     	<p ng-show="(hospitalData | filter:searchHospital).length == 0" style="color:red">Data Not Available!</p>
+			     	<enter>
+					<br>
 			     </div>
 			</div>
 			</div>
-			
-
-
 			</div>
+			<div id="profile" class="tab-pane fade">
+				<div class="row">
+			    <div class="col-lg-12">
+			        <center>
+
+			        <h2 class="page-header">Update Profile</h2>
+
+					<form ng-submit="save()" >
+			   		<table style="width:40%">
+			   	
+				   		<tr>
+				   	
+					   		<td><label><div class="form-group">Name</div></label></td>
+					    	<td><div class="form-group"><input type="text" class="form-control"  name="name" placeholder="Name" ng-model="data.name" disabled="disabled"></div></td>
+				    
+				   		 </tr>
+				  	
+				  		<tr>
+			  	
+					    	<td>
+					    	<label><div class="form-group">Username</div></label>
+					    	</td>
+					    	<td><div class="form-group"><input type="text" class="form-control" placeholder="Username" ng-model="data.username" name="username" disabled="disabled"></div></td>
+					  	
+			  			</tr>
+			  			<tr>
+				
+						    <td><label><div class="form-group">Email</label></div></td>
+						    <td><div class="form-group"><input type="email" class="form-control" placeholder="Email" ng-model="data.email" name="email" disabled="disabled"></div><td>
+						  	
+					  	</tr>
+					  	<tr>
+				
+						    <td><label><div class="form-group">Medical Condition</label></div></td>
+						    <td><div class="form-group"><input type="string" class="form-control" placeholder="medical condition" ng-model="data.condition" name="medicalCondition"></div><td>
+						  	
+					  	</tr>
+
+					  	 
+
+					  	<tr>
+					  	<td><label>Gender</label></td>
+					  	<td>
+					  		<div class="form-group">
+					  		<select class="selectpicker" name="user_gender" data-width="290px" ng-model="data.gender">
+					  		<option></option>
+				  			<option value="Male">MALE</option>
+				  			<option value="Female">FEMALE</option>
+				  			</select>
+				  			</div>	  			
+						</td>
+			  			<tr>
+				
+						    <td><label><div class="form-group">Age</label></div></td>
+						    <td><div class="form-group"><input type="number" class="form-control" placeholder="age" ng-model="data.age" name="age"></div><td>
+						  	
+					  	</tr>
+			  			</table>
+						  <button type="submit" class="btn btn-default">Submit</button>
+				</form>
+			    </center>
+			   </div>
+             </div>
+			 </div>
 			<div id="change_password" class="tab-pane fade">
 			  <div class="row">
 			    <div class="col-lg-12">
@@ -873,3 +959,4 @@
  	</div>
  </div>
  </div>
+

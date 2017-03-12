@@ -157,7 +157,7 @@ return{
 
     if(response.data.errorCode==1){
     	alert( "new password is send to your mail");
-    	$window.location.href='/patient/login';
+    	$window.location.href='/doctor/login';
     }
     if(response.data.errorCode==0){
     	alert("some error occured.please try again")

@@ -4,20 +4,38 @@ app.config(function($interpolateProvider) {
   $interpolateProvider.endSymbol('}]}');
 });
 
-app.controller("registerController",['$scope','$rootScope','$window','registerUser',function($scope,$rootScope,$window,registerUser){
+app.controller("registerController",['$scope','$rootScope','$window','registerUser','getCaptchas',function($scope,$rootScope,$window,registerUser,getCaptchas){
 
 $scope.user={
 'name':'',
 'username':'',
 'email':'',
 'user_type':'',
-'password':''
+'password':'',
+'contact':'',
+'captchas':'',
+'regno':''
 };
 
 $scope.register=function(){ 
 registerUser.postData($scope.user)
 }
 
+$scope.checkCaptcha=function(){
+  if($scope.user.captchas==$scope.captcha){
+    $scope.status=1;
+
+}
+else{
+  $scope.status=0;
+}
+}
+
+$scope.getCaptcha=function(){
+getCaptchas.getData().then(function(data){
+  $scope.captcha=data.captcha;
+})
+}
 
 }]);
 
@@ -82,3 +100,24 @@ app.directive('usernameAvailable', function($timeout, $q,$http) {
     }
   } 
 });
+
+app.factory("getCaptchas",['$http',function($http){
+  
+  return{
+    getData:function(){
+    Datas=$http({
+      method: 'GET',
+      url: '/register/getCaptcha'
+  }).then(function(response) {
+      
+      return response.data;
+      
+    })
+      
+    return Datas;
+
+   }  
+    
+}
+  
+}]);

@@ -231,4 +231,35 @@ else{
   
 });
 
+router.get('/getHospital' ,function(req,res){
+ 
+//res.json({"name":"deepak kumar"});
+  Hospital.getHospitalDatas(function(err,user){
+    if(!user){
+      console.log('error');
+    }
+    else
+    {//console.log(user);
+      res.json(user);
+
+    }
+  })
+
+});
+
+router.post('/deleteHospital', function(req, res) {
+console.log(req.body);
+ Hospital.delete(req.body._id,function(err,callback){
+   if(!callback){
+     console.log('error');
+    }
+  else{
+     //
+    }
+
+  });
+
+  
+});
+
 module.exports = router;

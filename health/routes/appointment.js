@@ -8,6 +8,8 @@ router.post('/reqAppointment',function(req,res) {
 	var data={patientid:req.session.patient._id,
 								patientName:req.session.patient.name,
 								doctorid:req.body._id,
+								condition:req.session.patient.condition,
+								age:req.session.patient.age,
 								doctorName:req.body.name,
 								status:"pending",
 								date:'',

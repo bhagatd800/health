@@ -25,6 +25,9 @@ var DoctorSchema = mongoose.Schema({
 	gender:{
 		type:String
 	},
+	contact:{
+		type:String
+	},
 	location:{
 		type:String
 	},
@@ -36,7 +39,21 @@ var DoctorSchema = mongoose.Schema({
 	},
 	nationality:{
 		type:String
+	},
+	regno:{
+		type:String
+	},
+	image:{
+		type:String
+	},
+	rating:{
+		type:Number
+	},
+	count:
+	{
+		type:Number
 	}
+
 
 });
 
@@ -112,12 +129,17 @@ module.exports.getEntireData=function(callback){
 }
 
 module.exports.setNewPassword=function(email,password,callback){
-
+//console.log(email);
+//console.log(password);
 	bcrypt.genSalt(10, function(err, salt) {
 	    bcrypt.hash(password, salt, function(err, hash) {
 	        password = hash;
-	        doctor.update({ email: email }, { $set: { password: password }}, callback);
+	        console.log(password);
+	        doctor.update({ "email": email }, { $set: { "password": password }}, callback);
 	    });
 	});
 	
+}
+module.exports.setRatings=function(id,rating,cb){
+doctor.update({ "_id": id }, { $set: { "rating":rating ,"count":rating }}, cb);
 }

@@ -23,6 +23,12 @@ var AppointmentSchema = mongoose.Schema({
 	},
 	status:{
 		type:String
+	},
+	age:{
+		type:Number
+	},
+	condition:{
+		type:String
 	}
 });
 

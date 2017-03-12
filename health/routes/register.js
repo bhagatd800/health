@@ -3,8 +3,10 @@ var router = express.Router();
 var Doctor = require('../models/doctors');
 var Patient =require('../models/patients');
 var flash = require('connect-flash');
+var randomstring = require("randomstring");
 router.get('/register', function(req, res) {
   res.render('register');
+
 });
 
 router.post('/register', function(req, res){
@@ -13,6 +15,8 @@ router.post('/register', function(req, res){
 	var username = req.body.username;
 	var password = req.body.password;
 	var user_type=req.body.user_type;
+	var contact=req.body.contact;
+	var regno=req.body.regno;
 	//console.log(user_type);
 
 
@@ -23,7 +27,8 @@ router.post('/register', function(req, res){
 			email:email,
 			username: username,
 			password: password,
-			user_type:user_type
+			user_type:user_type,
+			contact:contact
 		});
 
 		Patient.createPatient(newPatient, function(err, user){
@@ -45,6 +50,8 @@ router.post('/register', function(req, res){
 			username: username,
 			password: password,
 			user_type:user_type,
+			contact:contact,
+			regno:regno,
 			status:0
 		});
 
@@ -120,5 +127,10 @@ router.get('/logout', function(req, res,next) {
 	req.session.doctor=null;
 	req.session.admin=null;
   res.render('index');
+});
+
+router.get('/getCaptcha', function(req, res,next) {
+var captcha=randomstring.generate(5);
+res.json({"captcha":captcha})
 });
 module.exports = router;

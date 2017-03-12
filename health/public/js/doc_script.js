@@ -1,10 +1,10 @@
-var app = angular.module("myapp", ['ui.bootstrap']);
+var app = angular.module("myapp", ['ui.bootstrap','ngFileUpload']);
 app.config(function($interpolateProvider) {
   $interpolateProvider.startSymbol('{[{');
   $interpolateProvider.endSymbol('}]}');
 });
 
-app.controller("tabController", ['$scope','getDatas','postDatas','changePassword','postSymptom','getResult','getAppointments','declineAppointments','setAppointments','getApprovedAppointments','checkPasswords', function($scope,getDatas,postDatas,changePassword,postSymptom,getResult,getAppointments,declineAppointments,setAppointments,getApprovedAppointments,checkPasswords)  {
+app.controller("tabController", ['$scope','getDatas','Upload','postDatas','changePassword','postSymptom','getResult','getAppointments','declineAppointments','setAppointments','getApprovedAppointments','checkPasswords', function($scope,getDatas,Upload,postDatas,changePassword,postSymptom,getResult,getAppointments,declineAppointments,setAppointments,getApprovedAppointments,checkPasswords)  {
 
 $scope.getDocData=function(){  
 getDatas.docData().then(function(data){
@@ -126,8 +126,38 @@ $scope.setAppointment=function(){
 
 
 $scope.save=function(){
+ 
+  $scope.upload($scope.file);
   postDatas.postDocData($scope.data);
 };
+
+$scope.upload = function (file) {
+            //alert("deepak");
+           $scope.file=Upload.rename(file,$scope.data.username+"."+ file.name.substring(file.type.lastIndexOf('/'), file.name.length).replace('/', '.'));
+           $scope.data.image=$scope.file.ngfName;
+         //  alert( $scope.data.image);
+            Upload.upload({
+                url: '/doctor/upload', //webAPI exposed to upload the file
+                data:{file:file
+} //pass file as data, should be user ng-model
+            }).then(function (resp) { //upload function returns a promise
+                if(resp.data.error_code === 0){
+
+                  alert('Success ' + resp.config.data.file.name + 'uploaded. Response: ');
+                } else {
+                    alert('an error occured');
+                }
+            }, function (resp) { //catch error
+                console.log('Error status: ' + resp.status);
+                alert('Error status: ' + resp.status);
+            }, function (evt) {
+                console.log(evt);
+                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+                $scopr.progress = 'progress: ' + progressPercentage + '% '; // capture upload progress
+            });
+        
+        };
 
 $scope.password={
   'currentPassword':'',
@@ -160,6 +190,8 @@ $scope.getApprovedAppointment=function(){
 $scope.disabled=false;
 }
 $scope.search=function(){
+
+  
   $scope.disease="";
   if(($scope.symptom.sym1==$scope.symptom.sym2)||($scope.symptom.sym1==$scope.symptom.sym3)||($scope.symptom.sym1==$scope.symptom.sym4)||($scope.symptom.sym1==$scope.symptom.sym5)||($scope.symptom.sym2==$scope.symptom.sym3)||($scope.symptom.sym2==$scope.symptom.sym4)||($scope.symptom.sym2==$scope.symptom.sym5)||($scope.symptom.sym3==$scope.symptom.sym4)||($scope.symptom.sym3==$scope.symptom.sym5)||($scope.symptom.sym4==$scope.symptom.sym5)){
     alert("Enter Different Symptoms");

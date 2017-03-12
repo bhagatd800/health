@@ -33,6 +33,7 @@ var hospital = module.exports = mongoose.model('hospital', HospitalSchema);
 
 
 module.exports.upload=function(data,cb){
+	console.log(data);
 		hospital.update({name:data.name,city:data.city},{$set:data},{ upsert: true },function(err,docs){
 
     if(err)
@@ -44,3 +45,9 @@ module.exports.getHospitalDatas=function(callback){
 	
 	hospital.find(callback);
 }
+module.exports.delete=function(id,callback){
+	
+	hospital.remove({ _id: id }, callback);
+}
+
+

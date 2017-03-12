@@ -1,9 +1,9 @@
-var app = angular.module("myadmin", ['ngFileUpload']);
+var app = angular.module("myadmin", ['ngFileUpload','jkAngularRatingStars']);
 app.config(function($interpolateProvider) {
   $interpolateProvider.startSymbol('{[{');
   $interpolateProvider.endSymbol('}]}');
 });
-app.controller("adminController", ['$scope','Upload','getPatientDatas','deleteDoc','getDoctorDatas','deletePatients','changePassword','getNewDoctor','approveDoctor','uploadHospital','checkPasswords', function($scope,Upload,getPatientDatas,deleteDoc,getDoctorDatas,deletePatients,changePassword,getNewDoctor,approveDoctor,uploadHospital,checkPasswords)  {
+app.controller("adminController", ['$scope','Upload','getPatientDatas','deleteDoc','getDoctorDatas','deletePatients','changePassword','getNewDoctor','approveDoctor','uploadHospital','checkPasswords','getHospitals','deleteHospitals', function($scope,Upload,getPatientDatas,deleteDoc,getDoctorDatas,deletePatients,changePassword,getNewDoctor,approveDoctor,uploadHospital,checkPasswords,getHospitals,deleteHospitals)  {
 
 $scope.hospitalData={
 
@@ -56,7 +56,30 @@ $scope.getPatientData=function(){
   //alert($scope.patientData.name);
 });
 
+
 }
+
+$scope.getHospitalData=function(){
+
+  getHospitals.getData().then(function(data){
+  $scope.hospital=data;
+  //alert("$scope.patientData.name");
+});
+}  
+
+ $scope.deleteHospital=function(id){
+  if(confirm("Do you want to Delete Hospital"))
+  {
+
+  deleteHospitals.delete(id);
+  getHospitals.getData().then(function(data){
+  $scope.hospital=data;
+  
+});
+}
+ }
+
+
 $scope.newDoctor=function(){
 
 getNewDoctor.getData().then(function(data){
@@ -217,6 +240,7 @@ app.factory("deleteDoc",['$http',function($http){
 return{
 
    delete:function(id){
+    alert(abc);
      docDatas=$http({
       method: 'POST',
        url: '/admin/delete_doctor',
@@ -349,3 +373,46 @@ return{
 return data;
 }
 }}]);
+
+
+app.factory("getHospitals",['$http',function($http){
+
+return{
+
+   getData:function(){
+     docDatas=$http({
+      method: 'GET',
+       url: '/admin/getHospital'
+   }).then(function(response) {
+      
+       return response.data;
+      
+     })
+      
+     return docDatas;
+
+    }
+
+
+}
+
+}]);
+
+app.service("deleteHospitals",['$http',function($http){
+
+return{
+  delete:function(data){
+    alert("jahs");
+  $http({
+    url: '/admin/deleteHospital',
+    method: "POST",
+    data: data,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+})
+
+}
+
+}}
+]);
