@@ -8,14 +8,14 @@ app.controller("patientController", ['$scope','changePassword','postSymptom','ge
 $scope.onItemRating = function(data){
   //alert(JSON.stringify(data));
   if(!data.rating2){
-    data.rate=0;
+    data.rating2=0;
     
     setRating.postData(data);
   }
   else{
     //data.count=data.count+1;
     setRating.postData(data);
-    alert(JSON.stringify(data));
+    //alert(JSON.stringify(data));
   }
   
 };

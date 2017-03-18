@@ -36,7 +36,7 @@ var appointment = module.exports = mongoose.model('appointment', AppointmentSche
 
 module.exports.reqAppointment = function(data, callback){
 	console.log(data);
-	appointment.update({doctorid:data.doctorid,patientid:data.patientid},{$set:data},{ upsert: true },callback);
+	appointment.update({"doctorid":data.doctorid,"patientid":data.patientid},{$set:data},{ upsert: true },callback);
 	
 }
 module.exports.getAppointmentDatas=function(id,callback){

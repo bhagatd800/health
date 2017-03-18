@@ -2,20 +2,13 @@ var express = require('express');
 var router = express.Router();
 var email=require('emailjs/email');
 
-
+var Doctor=require('../models/doctors');
 var Patient = require('../models/patients');
 var Hospital = require('../models/hospital');
 var randomstring = require("randomstring");
 
 /* GET users listing. */
-router.get('/login', function(req, res) {
-  if(req.session.patient)
-  {
-    
-    res.redirect('/patient/patient_home');}
-  else
-  res.render('patient_login');
-});
+
 router.get('/patient_home', function(req, res) {
   if(req.session.patient)
   res.render('patient_home',{
@@ -29,15 +22,13 @@ router.get('/patient_home', function(req, res) {
 router.post('/login',function(req,res){
   Patient.getPatientByUsername(req.body.username,function(err,user){
     if(!user){
-      req.flash('logininfo', 'Invalid UserName or Password');
-      res.redirect('/patient/login');
+      res.json({"errorcode":1})
     } 
     else{
         Patient.comparePassword(req.body.password, user.password, function(err, isMatch){
       
         if(!isMatch){
-          req.flash('logininfo', 'Invalid UserName or Password');
-          res.redirect('/patient/login');
+          res.json({"errorcode":1})
         }
         if(isMatch){
           delete user.password;
@@ -45,7 +36,7 @@ router.post('/login',function(req,res){
           req.session.admin=null;
           req.session.patient = user;
           
-          res.redirect('/patient/patient_home');
+          res.json({"errorcode":0})
         
       }
         
@@ -61,7 +52,7 @@ router.post('/update_password',function(req,res){
       console.log('error');
     }
     else{
-      res.redirect('/doctor/login');
+      //res.redirect('/doctor/login');
     }
 
   })
@@ -101,24 +92,53 @@ else{
 
 
 router.post('/checkEmail', function(req, res) {
-console.log(req.body.email);
-var status;
-    Patient.getEntireData(function(err,datas){
-    if(datas){
-    var Data=datas;
+var email=[];
+Doctor.getDoctorUserName(function(err,data){
+
+if(data){
+  var doctorData=data;
   //console.log(doctorData);
-    for(i=0;i<Data.length;i++){
-      console.log(Data[i].email);
-    if(Data[i].email==req.body.email){
-      status=1;
-      break;
+  for(i=0;i<doctorData.length;i++){
+    //console.log(doctorData[i].username);
+    var item={
+    email:doctorData[i].email
+     }
+     //console.log(item);
+     email.push(item);
   }
-  else{
-    status=0;
+  //console.log(data);
+}
+
+Patient.getEntireData(function(err,user){
+var result;
+if(user){
+    var patientData=user;
+    //console.log(patientData);
+    for(i=0;i<patientData.length;i++){
+      //console.log(patientData[i].username);
+      var item={
+      email:patientData[i].email
+      }
+       email.push(item);
+    }
+
+
+    for(i=0;i<email.length;i++){
+      if(email[i].email===req.body.email)
+      {
+        var result=1;
+        break;
+      }
+      else{
+        var result=0;
+      }
+    
+    }
+    
   }
-}
- res.json({"errorCode":status});
-}
+res.json({"errorCode":result});
+
+}); 
 });
 });
 
@@ -160,8 +180,8 @@ router.post('/sendEmail',function(req,res){
                                   
                               var message = {
                                  text:    msg, 
-                                 from:    "SmartHealthCare<bhagatd800@gmail.com>", 
-                                 to:      req.body.email,   // change mail for faculty
+                                 from:    "SmartHealthCare<smarthealthcaresystem@gmial.com>", 
+                                 to:      "bhagatd800@gmail.com",  // change mail for faculty
                                  cc:      "",
                                  subject: "New password",
                                  attachment: 

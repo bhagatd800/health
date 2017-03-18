@@ -25,8 +25,20 @@ router.get('/admin',function(req,res){
   res.render('admin_login');
 });
 
+router.get('/login', function(req, res) {
 
 
+  if(req.session.doctor)
+  {
+    
+    res.redirect('/doctor/doctor_home');}
+  else if(req.session.patient)
+  {
+    
+    res.redirect('/patient/patient_home');}  
+  else
+  res.render('login');
+});
 
 
 

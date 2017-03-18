@@ -240,7 +240,7 @@ app.factory("deleteDoc",['$http',function($http){
 return{
 
    delete:function(id){
-    alert(abc);
+    //alert("abc");
      docDatas=$http({
       method: 'POST',
        url: '/admin/delete_doctor',
@@ -402,7 +402,7 @@ app.service("deleteHospitals",['$http',function($http){
 
 return{
   delete:function(data){
-    alert("jahs");
+   
   $http({
     url: '/admin/deleteHospital',
     method: "POST",

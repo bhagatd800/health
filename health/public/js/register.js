@@ -60,11 +60,11 @@ return{
   if(resp.data.errorcode===0){
     if(data.user_type=="Patient"){
       alert("SUCCESSFULLY REGISTERED.PLEASE LOGIN TO CONTINUE");
-      $window.location.href='/patient/login';
+      $window.location.href='/login';
     }
     if(data.user_type=="Doctor"){
         alert("SUCCESSFULLY REGISTERED. YOU CAN LOGIN AFTER VERIFICATION BY ADMINISTRATOR");
-        $window.location.href='/doctor/login';
+        $window.location.href='/login';
 
   }
     }

@@ -69,7 +69,7 @@ module.exports.createDoctor = function(newDoctor, callback){
 }
 
 module.exports.getDoctorByUsername = function(username, callback){
-	console.log(username);
+	//console.log(username);
 	var query = {username: username,status:1};
 	doctor.findOne(query, callback);
 	

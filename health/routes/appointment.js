@@ -1,20 +1,66 @@
 var express = require('express');
 var router = express.Router();
 var session = require('express-session');
+var Patient = require('../models/patients');
 var Appointment = require('../models/appointments');
 var moment= require('moment');
 router.post('/reqAppointment',function(req,res) {
-	//console.log(req.body)
-	var data={patientid:req.session.patient._id,
-								patientName:req.session.patient.name,
-								doctorid:req.body._id,
-								condition:req.session.patient.condition,
-								age:req.session.patient.age,
-								doctorName:req.body.name,
-								status:"pending",
-								date:'',
-								time:''};
-	//console.log(data);
+	var data;
+	Patient.getProfiles(req.session.patient._id,function(err,datas){
+		var datas=datas;
+		console.log(datas);
+    if(err){
+
+    }
+    else if(!datas.age){
+    	 data={patientid:datas._id,
+			  patientName:datas.name,
+			  doctorid:req.body._id,
+			  condition:datas.condition,
+			  doctorName:req.body.name,
+			  status:"pending",
+			  date:'',
+			  time:''
+			};
+
+    }
+     else if(!datas.condition){
+    	 data={patientid:datas._id,
+			  patientName:datas.name,
+			  doctorid:req.body._id,
+			  age:datas.age,
+			  doctorName:req.body.name,
+			  status:"pending",
+			  date:'',
+			  time:''
+			};
+
+    }
+    else if(!datas.condition&&!datas.age){
+    	 data={patientid:datas._id,
+			  patientName:datas.name,
+			  doctorid:req.body._id,
+			  doctorName:req.body.name,
+			  status:"pending",
+			  date:'',
+			  time:''
+			};
+
+    }
+
+    else{
+	data={patientid:datas._id,
+			  patientName:datas.name,
+			  doctorid:req.body._id,
+			  condition:datas.condition,
+			  age:datas.age,
+			  doctorName:req.body.name,
+			  status:"pending",
+			  date:'',
+			  time:''
+			};
+
+	}
 	Appointment.reqAppointment(data,function(err,callback){
 									if(err){
 										res.json({"errorcode":0});
@@ -24,6 +70,8 @@ router.post('/reqAppointment',function(req,res) {
 										res.json({"errorcode":1});
 									}
 								});
+	});//console.log(data);
+	
 });
 
 router.get('/getAppointmentData',function(req,res){

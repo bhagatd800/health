@@ -75,10 +75,11 @@ h2 {
                 <ul class="nav navbar-nav navbar-right">
                     {{#if users}}
                     <li>
-                    
-                        <a href="/register/logout"><span class="glyphicon glyphicon-user"></span> LogOut </a></li>
+                    <a class="navbar-brand" href="/register/logout"><span class="glyphicon glyphicon-user"></span> LogOut </a></li>
                     {{else}}
-                   <li> <a href="/register/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+                   <li> 
+                   <a class="navbar-brand" href="/login"><span class="glyphicon"></span> LogIn </a>
+                   <a class="navbar-brand" href="/register/register"><span class="glyphicon glyphicon-user"></span> SignUp</a>
                         
                     
                     </li>
@@ -161,6 +162,7 @@ h2 {
      <script src="/js/admin_script.js"></script>
      <script src="/js/forgetpassword_script.js"></script>
      <script src="/js/register.js"></script>
+     <script src="/js/login.js"></script>
      <script src="/js/angular.min.js.map"></script>
      <script src="/js/ng-file-upload-all.min.js"></script>
      <script src="/js/ng-file-upload-shim.min.js"></script>

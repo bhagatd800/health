@@ -1,0 +1,219 @@
+doctype html
+html
+  title A_A_Home
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='/css/home.css')
+    // Custom styles for this template
+    link(href='assets/css/style.css', rel='stylesheet')
+    link(href='assets/css/style-responsive.css', rel='stylesheet')
+    // Bootstrap core CSS
+    link(href='assets/css/bootstrap.css', rel='stylesheet')
+    // external css
+    link(href='assets/font-awesome/css/font-awesome.css', rel='stylesheet')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+    style.
+      body {
+      background-color:#2C3E50;
+      }
+      header {
+      background-color: #2C3E50;
+      border-bottom: 1px solid #fd9f1b;
+      }
+      h3{
+      font-size:18px;
+      }
+      .navbar h2 {
+      color:#fd9f1b;
+      }
+      .user {
+      font-family:;
+      }
+      .row{
+      offset:0px;
+      }
+      .row a {
+      text-decoration: none;
+      color: black;
+      }
+      .panel-box {
+      display: table;
+      table-layout: fixed;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      border: medium none;
+      }
+      .panel-box .panel-icon {
+      display: table-cell;
+      padding: 15px;
+      width: 1%;
+      vertical-align: top;
+      border-radius: 0px;
+      text-align: center;
+      /*border-bottom: 1px solid #fcfcfc;
+      border-top: 1px solid #fcfcfc;
+      border-right: 1px solid #fcfcfc;*/
+      }
+      .dashboard-stats .stat-icon {
+      line-height: 65px;
+      }
+      .bg-success {
+      background-color: #A3C86D !important;
+      color: #FFF !important;
+      }
+      .success-text {
+      color: #82b33a;
+      }
+      .bg-danger {
+      background-color: #FF7857 !important;
+      color: #FFF !important;
+      }
+      .danger-text {
+      color: #d15b3d;
+      }
+      .bg-lovender {
+      background-color: #8075C4 !important;
+      color: #FFF !important;
+      }
+      .lovender-text {
+      color: #6a5fb1;
+      }
+      .bg-info {
+      background-color: #7ACBEE !important;
+      color: #FFF !important;
+      }
+      .info-text {
+      color: #3ca0cb;
+      }
+      .size-h1 {
+      margin-left:-10px;
+      margin-top:0px;
+      font-size: 14px;
+      }
+      .panel-icon p.text {
+      font-weight: bold;
+      font-size: 16px;
+      text-align: center;
+      }
+      .panel-icon i {
+      text-align: center;
+      }
+      .panel-icon i {
+      text-align: center;
+      }
+      .text-large {
+      font-size: 50px;
+      }
+      .text-large {
+      font-size: 50px;
+      }
+      .img-circle {
+      width:150px;
+      height:150px;
+      margin-top:0px;
+      border:6px solid lightgrey;
+      }
+      .glyphicon, .fa {
+      font-size: 50px;
+      }
+      .glyphicon-off {
+      font-size: 20px;
+      }
+      .col-lg-12 {
+      color:white;
+      }
+      .panel:hover {
+      transform: scale(1.2);
+      transition-duration: 0.3s;
+      }
+      .header .top-menu ul li a {
+      background-color: #2C3E50;
+      border: 1px solid #2C3E50;
+      }
+      .header .top-menu ul li {
+      border-color: 1px solid #2C3E50;
+      }
+      .col-sm-6
+      {
+      width:20%;
+      max-height:1%;
+      }
+  body
+    // header start
+    header.header
+      // logo start
+      a.logo(href='index.html')
+        b LOGO
+      // logo end
+      .top-menu
+        ul.nav.pull-right.top-menu
+          li
+            a.logout(href='login.html')
+              span.glyphicon.glyphicon-off
+    // header end
+    // CONTENT
+    div(style='width: 100%; overflow: hidden;')
+      .col-lg-12.col-sm-6.text-center.user(style='width: 470px; float: left;margin-bottom: 10px;')
+        center
+          br
+          br
+          br
+          br
+          br
+          img.img-circle.img-responsive.img-center(src='img/user2.jpg', alt='user')
+        h3
+          br
+          p 3307
+          p Babji Neelam
+          p Technical Head
+          br
+      br
+      br
+      br
+      br
+      br
+      br
+      .row.dashboard-stats.container(style='margin-left: 320px;margin-top: 20px; margin-right: 120px;margin-bottom:20px')
+        .col-md-3.col-sm-6
+          a(href='home2.html')
+            section.panel.panel-box
+              .panel-left.panel-icon.bg-info
+                span.glyphicon.glyphicon-education
+              .panel-right.panel-icon.bg-reverse
+                p.text-muted.no-margin.text
+                  span  
+                p.size-h1 Aditya Engineering Collages
+        .col-md-3.col-sm-6
+          a(href='my_data.html')
+            section.panel.panel-box
+              .panel-left.panel-icon.bg-success
+                span.glyphicon.glyphicon-user
+              .panel-right.panel-icon.bg-reverse
+                p.text-muted.no-margin.text
+                  span
+                p.size-h1 Aditya Parmacy Collages
+        .col-md-3.col-sm-6
+          a(href='#')
+            section.panel.panel-box
+              .panel-left.panel-icon.bg-danger
+                span.glyphicon.glyphicon-ok-circle
+              .panel-right.panel-icon.bg-reverse
+                p.text-muted.no-margin.text
+                  span
+                p.size-h1 Aditya Polytechnic Collages
+        .col-md-3.col-sm-6
+          a(href='#')
+            section.panel.panel-box
+              .panel-left.panel-icon.bg-lovender
+                i.fa.fa-building-o
+              .panel-right.panel-icon.bg-reverse
+                p.text-muted.no-margin.text
+                  span
+                p.size-h1 Aditya Global Schools
+      // //CONTENT
+  script.

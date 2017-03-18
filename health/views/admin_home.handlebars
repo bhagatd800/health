@@ -35,6 +35,7 @@
 					    <tr>
 					      <th>Name</th>
 					      <th>Username</th>
+					      <th>Reg No</th>
 					      <th>Email</th>
 					      <th>Action</th>
 
@@ -44,6 +45,7 @@
 				      <tr ng-repeat="data in newDoctor |filter:searchDoctor">
 				        <td>{[{data.name}]}</td>
 				        <td>{[{data.username}]}</td>
+				        <td>{[{data.regno}]}</td>
 				        <td>{[{data.email}]}</td>
 				        <td><button type="button" class="btn btn-success" ng-click="approve(data)">Approve</button>
 				      <button type="button" class="btn btn-danger" ng-click="deleteNewDoctor(data)">Delete</button></td>
@@ -79,7 +81,9 @@
 					    <tr>
 					     
 					      <th>Username</th>
+					      <th>Reg No</th>
 					      <th>Email</th>
+
 					      <th>Location</th>
 					      
 					      <th>Rating</th>
@@ -91,6 +95,7 @@
 				      <tr ng-repeat="data in doctorData |filter:searchDoctor">
 				        
 				        <td>{[{data.username}]}</td>
+				        <td>{[{data.regno}]}</td>
 				        <td>{[{data.email}]}</td>
 				        <td>{[{data.location}]}</td>
 				        <td><jk-rating-stars rating="data.rating" read-only="true" style="color:red" ></jk-rating-stars></td>
@@ -169,7 +174,7 @@
 					    <tr>
 					      <th>Name</th>
 					      <th>City</th>
-					      <th>Specialty</th>
+					      <th>Speciality</th>
 					      <th>Action</th>
 
 					    </tr>
@@ -214,8 +219,8 @@
 
 		             <label style="margin-right: 10px;margin-left:36px; margin-top: 40px; ">Phone:</label>
 		             <input type="text" placeholder="phone number" ng-model="hospitalData.phone" ng-module="hospitalData.number"/>
-		              <label style="margin-left:90px;margin-right: 10px">Specialty:</label>
-		             <input type="text" placeholder="specialty" ng-model="hospitalData.specialty"/>
+		              <label style="margin-left:90px;margin-right: 10px">Speciality:</label>
+		             <input type="text" placeholder="speciality" ng-model="hospitalData.specialty"/>
 		           
 		             <label style="margin-left:21px; margin-right: 10px; ">Address:</label>
 		             <textarea type="text" placeholder="address" ng-model="hospitalData.address" style="margin-top:40px "></textarea> </br>
