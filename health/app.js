@@ -15,9 +15,9 @@ var mongoose = require('mongoose');
 var flash = require('express-flash');
 
 
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/healthcare');
-var db = mongoose.connection;
+// mongoose.Promise = global.Promise;
+// mongoose.connect('mongodb://localhost/healthcare');
+// var db = mongoose.connection;
 
 // setting the routes that are required
 var index = require('./routes/index');
