@@ -16,7 +16,7 @@ var flash = require('express-flash');
 
 
  mongoose.Promise = global.Promise;
- mongoose.connect('mongodb://ds259325.mlab.com:59325/heroku_9mljvgpd/healthcare');
+ mongoose.connect('mongodb://deepak:bhagat@ds259325.mlab.com:59325/heroku_9mljvgpd');
  var db = mongoose.connection;
 
 // setting the routes that are required
