@@ -158,7 +158,7 @@ router.post('/sendEmail',function(req,res){
       
       var server  = email.server.connect({
                                  user:    "smarthealthcaresystem@gmail.com", 
-                                 password:"Aditya@123", 
+                                 password:"12345!@#$%aA", 
                                  host:    "smtp.gmail.com", 
                                  ssl:     true
                               });
